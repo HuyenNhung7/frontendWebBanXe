@@ -1,0 +1,40 @@
+/* CSS global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: LexendRegular;
+}
+
+@font-face {
+    font-family: LexendRegular;
+    src: url('../../assets/font/Lexend-Regular.ttf');
+}
+
+@font-face {
+    font-family: LexendBold;
+    src: url('../../assets/font/Lexend-Bold.ttf');
+}
+
+/* Scrollbar CSS */
+html ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 8px;
+}
+
+html ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+html ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0);
+}

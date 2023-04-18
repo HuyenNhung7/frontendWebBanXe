@@ -1,0 +1,68 @@
+.information{
+    margin-top: 148px;
+    margin-bottom: 100px;
+}
+.information__heading{
+    margin-left: 180px;
+    margin-bottom: 20px;
+}
+.line {
+    width: 500px;
+    border: 2px solid black;
+}
+.information__content{
+    display: flex;
+    justify-content: space-evenly;
+}
+.buy {
+    margin: 80px auto 0;
+    width: 250px;
+    height: 50px;
+    border: 2px solid red;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: whitesmoke;
+    background-color: rgb(195, 0, 0);
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.buy{ 
+    text-decoration: none;
+    cursor: pointer;
+}
+.buy:hover{
+    background-color: rgb(255, 0, 0);
+}
+.information__heading__carName {
+    /* background-color: aqua; */
+    margin-left: 128px;
+    display: block;
+    color: red;
+    font-size: 40px;
+}
+.information__heading__priceCar {
+    color: black;
+    padding: 10px;
+    margin-left: 108px;
+    font-size: 30px;
+
+}
+.information__content__info {
+    margin-left: 180px;
+}
+.information__content__info p {
+    font-size: 20px;
+    color: rgb(26, 25, 25);
+    padding: 10px;
+}
+
+.informaton__content__img img {
+    margin-right: 40px;
+    margin-top: 28px;
+    width: 580px;
+    object-fit: cover;
+
+}

@@ -1,0 +1,81 @@
+.register{
+    background-image:url('../../assets/image/Bg1.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  background-position: 50% 50%;
+  background-size:cover;
+}
+
+.register{
+    align-content: centers;
+    text-align: center;
+    padding: 10px 0; 
+    margin-top: 100px;
+}
+.register h2{
+    color: #8A0000;
+    font-size: xx-large;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.registerlayout{
+    width: 70%;
+    margin: auto;
+    background-color: rgba(255, 255, 255, .5);
+    /*border: 0.5px solid #8A0000;*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 22px;
+    display: flex;
+}
+.form {
+    width: 50%;;
+    display: inline-block;
+    border-radius: 22px;
+    padding: 0 60px;
+    margin: 2rem 0 1rem 0;
+    text-align: left;
+    font-size: 20px;
+}
+.form span{
+    font-size: 15px;
+}
+
+.form label{
+    margin-top: 20px;
+}
+.registerimg{
+    width: 50%;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/kingspeed-1ee63.appspot.com/o/homepage%2Fnewsimg.png?alt=media&token=a6633157-390e-4df1-9935-f6887feccdd1);
+    background-repeat: no-repeat;
+    background-size:cover;
+    border-radius: 22px 0 0 22px ;
+    background-position: 50%;
+}
+.input {
+    margin: 20px 0 0 0;
+    max-width: 100%;
+    width: 100%;
+    height: 35px;
+    padding: .3rem;
+    font-size:20px;
+    border-radius: 5px;
+    outline: none;
+    border-color: #fff;
+}
+
+.button {
+    margin-top: 2rem;
+    padding: .6rem;
+    width: 85%;
+    font-size: 20px;
+    background: #8A0000;
+    border: none;
+    color: #fff;
+    transition: all .5s;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.button:hover{
+    background: #de4545;
+}

@@ -1,0 +1,65 @@
+.introBackground {
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/kingspeed-1ee63.appspot.com/o/Introduction%2F%E1%BA%A3nh%20n%E1%BB%81n%20introduce.png?alt=media&token=873ec7d9-fea7-45d5-8301-9c1701b27cd9');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 100px;
+}
+.introContent {
+  padding: 70px 160px;
+}
+
+.introTitle1 {
+  color: #ae0d0d;
+  font-size: 3.2rem;
+  font-weight: 600;
+  margin-top: 25px;
+}
+
+.introTitle1 {
+  text-shadow: 2px 2px 8px red;
+}
+
+.content {
+  font-size: 1.6rem;
+  margin: 50px;
+  word-spacing: 2px;
+  text-align: justify;
+}
+
+.introTitle2 {
+  color: #ae0d0d;
+  font-size: 2.8rem;
+}
+
+.content2 {
+  margin: 24px 0;
+}
+
+.showroomImg {
+  width: 75%;
+  height: 500px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 25px;
+}
+
+/* .introContent img {
+  width: 75%;
+} */
+.employeeImg {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 35px;
+}
+
+.employeeImg img {
+  width: 25%;
+  height: 200px;
+  display: block;
+}
+
+
+
+
+

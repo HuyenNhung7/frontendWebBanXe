@@ -1,0 +1,103 @@
+.contactLayer{
+    width: 100%;
+    background-image: linear-gradient(to right,#c31432, #240b36);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+.contactLayout{
+    display: flex;
+    width: 800px;
+    background-color: white;
+    box-shadow: 0px 0px 3px #ccc;
+    border-radius: 10px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.contactImage{
+   width: 50%;
+   height: auto;
+   background: url("../../assets/image/FormImage.png") no-repeat;
+   background-position: center;
+   background-size: cover;
+   border-bottom-left-radius: 10px;
+   border-top-left-radius: 10px;
+
+}
+.contactForm{
+   padding: 20px;
+   width: 50%;
+}
+.contactTitle{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.contactItem{
+    display: flex;
+    flex-direction: column;
+}
+.contactLabel{
+    font-size: 14px;
+    color: #777777;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.contactInput{
+    max-width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    height: 32px;
+    background-color: #D9D9D9;
+    border: solid 1px #777777;
+    outline: none;
+    border-radius: 4px;
+}
+textarea{
+    height: 100px;
+    max-height: 120px;
+    padding: 8px;
+    font-size: 14px;
+    background-color: #D9D9D9;
+    border: solid 1px #777777;
+    outline: none;
+    border-radius: 4px;
+}
+.contactSend{
+    font-size: 16px;
+    float: right;
+    color: white;
+    width: 80px;
+    height: 30px;
+    background-color: #080707;
+    border-radius: 20px;
+    border: none;
+    margin-top: 8px;
+    cursor: pointer;
+    box-shadow: 2px 2px 3px #777;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+.contactSend:focus{
+    box-shadow: none;
+}
+.contactSend:before {
+    content: "";
+    height: 100%;
+    width: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #A30000;
+    z-index: -1;
+    transition: width 0.25s ease-in;
+    border-radius: 20px;
+  }
+.contactSend:hover:before {
+    width: 100%;
+  }
+  
+ 

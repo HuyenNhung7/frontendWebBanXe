@@ -1,0 +1,20 @@
+.nameType {
+  margin-left: 160px;
+  padding: 40px 0;
+  font-size: 3rem;
+  text-decoration: underline;
+  letter-spacing: 4px;
+}
+
+.containerLayout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px 160px;
+}
+
+.productContainer {
+  min-height: 700px;
+  background: linear-gradient(to top, #b4babe 0%, #eef2f3 40%);
+  padding-top: 100px;
+}
