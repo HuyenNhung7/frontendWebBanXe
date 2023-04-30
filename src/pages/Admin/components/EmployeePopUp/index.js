@@ -118,7 +118,7 @@ function EmployeePopUp({type, setType, updateEmployee, setUpdateEmployee }) {
 
     // object data
     const dataCreate = {
-       name: employeeName,
+       username: employeeName,
        gioitinh: sex,
        diachi: address,
        ngaysinh: dateOfBirth,
@@ -131,7 +131,7 @@ function EmployeePopUp({type, setType, updateEmployee, setUpdateEmployee }) {
     };
 
     const dataUpdate = {
-        name: employeeName,
+        username: employeeName,
         gioitinh: sex,
         diachi: address,
         ngaysinh: dateOfBirth, 
@@ -150,6 +150,7 @@ function EmployeePopUp({type, setType, updateEmployee, setUpdateEmployee }) {
 
     const handleCreateEmployee = async (e) => {
         e.preventDefault();
+        console.log(dataCreate);
         HandleApiEmployee.createEmployee(dataCreate)
             .then(async (res) => {
                 await Swal.fire({
@@ -169,7 +170,7 @@ function EmployeePopUp({type, setType, updateEmployee, setUpdateEmployee }) {
 
     const handleUpdateEmployee = async () => {
         console.log(updateEmployee._id);
-        HandleApiEmployee.updateEmployee(updateEmployee._id, dataUpdate)
+        HandleApiEmployee.updateEmployee(updateEmployee.id, dataUpdate)
             .then(async (res) => {
                 await Swal.fire({
                     position: "center",
@@ -188,12 +189,12 @@ function EmployeePopUp({type, setType, updateEmployee, setUpdateEmployee }) {
 
     useEffect(() => {
         if (updateEmployee !== {}) {
-            setEmployeeName(updateEmployee.name);
+            setEmployeeName(updateEmployee.username);
             setSex(updateEmployee.gioitinh);
             setAddress(updateEmployee.diachi);
             setDateOfBirth(updateEmployee.ngaysinh);
             setPhone(updateEmployee.sdt);
-            setPosition(updateEmployee.chucvu);
+            setPosition(updateEmployee.role);
             setCccd(updateEmployee.cccd);
             setEmail(updateEmployee.email)
             setPassword(updateEmployee.password);
@@ -352,15 +353,15 @@ function EmployeePopUp({type, setType, updateEmployee, setUpdateEmployee }) {
                         <Box sx={{ flexGrow: 1, marginTop: "24px" }}>
                             <Grid container>
                                 <Grid item xs={6}>
-                                    <Item>{"Mã nhân viên: " + updateEmployee.mauser}</Item>
-                                    <Item>{"Tên nhân viên: " + updateEmployee.name}</Item>
+                                    <Item>{"Mã nhân viên: " + updateEmployee.id}</Item>
+                                    <Item>{"Tên nhân viên: " + updateEmployee.username}</Item>
                                     <Item>{"Ngày sinh: " + updateEmployee.ngaysinh}</Item>
                                     <Item>{"Giới tính: " + updateEmployee.gioitinh}</Item>
                                     <Item>{"Số điện thoại: " + 0 +updateEmployee.sdt}</Item>
                                     <Item>{"CCCD: " + updateEmployee.cccd}</Item>
                                     <Item>{"Địa chỉ: " + updateEmployee.diachi}</Item>
                                     <Item>{"Email: " + updateEmployee.email}</Item>
-                                    <Item>{"Chức vụ: "+updateEmployee.chucvu}</Item>
+                                    <Item>{"Chức vụ: "+updateEmployee.role}</Item>
                                 </Grid>
                                 <Grid item xs={6}>
                                     <img

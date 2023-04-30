@@ -6,7 +6,7 @@ const getCarById = async (id) => {
 };
 
 const getEmployeeById = async(id) =>{
-    return await axiosInstance2.get(`/users/employees/${id}`);
+    return await axiosInstance2.get(`api/v1/user/${id}`);
 }
 
 const getEmployeeByName = async (name) => {
@@ -14,7 +14,7 @@ const getEmployeeByName = async (name) => {
 };
 
 const getEmployeeBySearch = async (search) =>{
-    return await axiosInstance2.get(`/users/employees?search=${search}`);
+    return await axiosInstance2.get(`api/v1/user/?role=KH&size=15&username=${search}`);
 }
 
 const getEmployeeByMauser = async (mauser) => {
@@ -23,19 +23,19 @@ const getEmployeeByMauser = async (mauser) => {
 
 
 const getEmployeeByPageIndex = async (index) => {
-    return await axiosInstance2.get(`api/v1/user/?role=KH&size=6&page=${index}`);
+    return await axiosInstance2.get(`api/v1/user/?role=KH&size=15&page=${index}`);
 };
 
 const deleteEmployee = async (id) => {
-    return await axiosInstance2.delete(`/users/employees/${id}`);
+    return await axiosInstance2.delete(`api/v1/user/${id}`);
 };
 
 const createEmployee = async (data) => {
-    return await axiosInstance2.post(`/users/employees`, data);
+    return await axiosInstance2.post(`api/v1/user/register`, data);
 }
 
 const updateEmployee = async (id, data) => {
-    return await axiosInstance2.put(`/users/employees/${id}`, data)
+    return await axiosInstance2.put(`api/v1/user/${id}`, data)
 }
 
 export default {
