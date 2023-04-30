@@ -18,6 +18,7 @@ import classes from "../UserInfoPage.module.css";
 import Cookies from "js-cookie";
 
 const OrderSide = ({ setDetail }) => {
+    const user1 = JSON.parse(localStorage.getItem("user"));
     const token = Cookies.get("token");
     const gridTitle = ["STT", "ID", "Trị Giá", "Ngày", "Tình trạng", " "];
     const gridColumn = [1, 1, 2, 3, 3, 2];
@@ -56,17 +57,17 @@ const OrderSide = ({ setDetail }) => {
     };
     //useEffect(() => { setDidMount(true) }, [])
     const authAxios = axios.create({
-        baseURL: "https://showroomcar104.onrender.com",
+        baseURL: "http://localhost:9090/hduser/",
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
     const sendRequestSU = async () => {
         const res = await authAxios
-            .get(`/users/me`)
+            .get(`/${user1.id}`)
             .catch((err) => console.log(err));
 
-        const data = await res.data.hoadons;
+        const data = await res.data.lst;
         console.log(data);
         return data;
     };
@@ -91,13 +92,13 @@ const OrderSide = ({ setDetail }) => {
         setUserDataa((prev) =>
             prev.filter((item) => {
                 return (
-                    item.ngayhd.includes(Transform(value).toString()) &&
-                    item.mahd.toLowerCase().includes(input)
+                    item.ngayHD.includes(Transform(value).toString()) &&
+                    item.id.toString().toLowerCase().includes(input)
                 );
             })
         );
         {
-            userDataa.map((item, index) => console.log(item.ngayhd));
+            userDataa.map((item, index) => console.log(item.ngayHD));
         }
         setPageIndex(1);
         /*console.log(Math.ceil(userDataa.length/6));
@@ -194,13 +195,13 @@ const OrderSide = ({ setDetail }) => {
                                     Tất cả
                                 </MenuItem>
                                 <MenuItem
-                                    value="Chưa thanh toán"
+                                    value="Chua Thanh Toan"
                                     className={classes.menuItem}
                                 >
                                     Chưa thanh toán
                                 </MenuItem>
                                 <MenuItem
-                                    value="Đã thanh toán"
+                                    value="Da Thanh Toan"
                                     className={classes.menuItem}
                                 >
                                     Đã thanh toán
@@ -264,7 +265,7 @@ const OrderSide = ({ setDetail }) => {
                                             cursor: "pointer",
                                         }}
                                     >
-                                        {item.mahd}
+                                        {item.id}
                                     </p>
                                 </Grid>
                                 <Grid item xs={2}>
@@ -273,7 +274,7 @@ const OrderSide = ({ setDetail }) => {
                                     </p>
                                 </Grid>
                                 <Grid item xs={3}>
-                                    <p>{item.ngayhd}</p>
+                                    <p>{item.ngayHD}</p>
                                 </Grid>
                                 <Grid item xs={3}>
                                     <p>{item.tinhtrang}</p>

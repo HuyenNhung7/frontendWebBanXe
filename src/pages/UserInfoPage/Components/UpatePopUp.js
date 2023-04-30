@@ -22,7 +22,7 @@ const UpatePopUp = (props) => {
   const [birth, setBirth] = useState(props.data.ngaysinh)
   const [date, setDate] = useState(dayjs(props.data.ngaysinh,"DD:MM:YYYY"))
   const authAxios = axios.create({
-    baseURL: 'https://showroomcar104.onrender.com',
+    baseURL: 'http://localhost:9090/api/v1/user',
     headers:{
       Authorization:`Bearer ${token}`
     }
@@ -33,17 +33,17 @@ const UpatePopUp = (props) => {
 
   const sendRequestSU = async ()=>{
     const res = await authAxios
-    .put(`/users/me`,{
-      name:String(formData.name),
+    .put(`/${props.data.id}`,{
+      username:String(formData.name),
       diachi:String(formData.diachi),
       sdt:String(formData.sdt),
-      cccd:String(formData.cccd),
+      cccd:String(formData.sdt),
       ngaysinh:String(birth),
       gioitinh:String(formData.gioitinh)
     })
     .catch((err)=>console.log(err))
 
-    const data = await res.data;
+    const data = await res.data.data;
     console.log(data);
     return data;
   }
@@ -55,7 +55,7 @@ const UpatePopUp = (props) => {
   useEffect(() => { setDidMount(true) }, [])
   const [formData, setFormData] = useState(
     {
-        name: (props.data.name !== "undefined")? props.data.name : "" , 
+        name: (props.data.name !== "undefined")? props.data.username : "" , 
         diachi: (props.data.diachi !== "undefined" && props.data.cccd !== "null")? props.data.diachi : "",
         sdt: (props.data.sdt !== "undefined" && props.data.cccd !== "null")? props.data.sdt : "", 
         cccd: (props.data.cccd !== "undefined" && props.data.cccd !== "null" )? props.data.cccd : "", 

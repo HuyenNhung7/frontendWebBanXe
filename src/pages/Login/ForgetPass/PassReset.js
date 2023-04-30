@@ -73,20 +73,19 @@ const PassReset = () => {
         }
     }
     const authAxios = axios.create({
-      baseURL: 'https://showroomcar104.onrender.com/users',
+      baseURL: 'http://localhost:9090/api/v1/user/resetpass',
       headers:{
         Authorization:`Bearer ${token}`
       }
     })
     const sendRequestSU = async ()=>{
         const res = await authAxios
-        .put(`/resetPassword`,{
-          password:String(inputs.password),
-          verifyToken:String(token)
+        .post(``,{
+          password:String(inputs.password)
         })
         .catch((err)=>console.log(err))
     
-        const data = await res.data;
+        const data = await res.data.data;
         console.log(data);
         return data;
       }

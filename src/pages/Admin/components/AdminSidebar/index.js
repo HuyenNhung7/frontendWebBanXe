@@ -44,6 +44,8 @@ function AdminSidebar() {
     const StaffLink = [
         "/dashboard",
         "/dashboard/customer-management",
+        "/dashboard/staff-management",
+        "/dashboard/news-management",
         "/dashboard/form-management",
         "/dashboard/invoice-management",
     ];
@@ -58,6 +60,8 @@ function AdminSidebar() {
     const staffFuncIcon = [
         <DirectionsCar className={styles.icon} />,
         <Group className={styles.icon} />,
+        <SupportAgent className={styles.icon} />,
+        <Newspaper className={styles.icon} />,
         <ContactMail className={styles.icon} />,
         <ReceiptLong className={styles.icon} />,
     ];
@@ -90,7 +94,7 @@ function AdminSidebar() {
                 </div>
             </div>
             <ul className={styles.sidebar_content}>
-                {user.role === "admin"
+                {user.role === "admin" || true
                     ? AdminFunc.map((func, index) => (
                           <li className={styles.sidebar_item} key={index}>
                               <NavLink

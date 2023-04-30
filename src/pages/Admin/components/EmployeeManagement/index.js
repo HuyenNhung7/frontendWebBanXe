@@ -56,8 +56,9 @@ function EmployeeManagement() {
     useEffect(() => {
         HandleApiEmployee.getEmployeeByPageIndex(pageIndex)
         .then((res) => {
-            setData(res.employees);
-            setDataLength(res.totalEmployees);
+            setData(res.lst);
+            setDataLength(res.total);
+            console.log(data);
         });
     }, [pageIndex]);
 
@@ -124,14 +125,14 @@ function EmployeeManagement() {
         if (searchValue.trim() !== "") {
             HandleApiEmployee.getEmployeeBySearch(searchValue.toUpperCase())
             .then(async (res) => {
-                await setData(res.employees);
+                await setData(res.lst);
                 await setDataLength(data.length);
             });
         } else {
             HandleApiEmployee.getEmployeeByPageIndex(pageIndex)
             .then((res) => {
-                setData(res.employees);
-                setDataLength(res.totalEmployees);
+                setData(res.lst);
+                setDataLength(res.total);
             });
         }
     }, [searchValue]);

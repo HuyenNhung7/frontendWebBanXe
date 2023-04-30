@@ -15,6 +15,7 @@ import CakeIcon from '@mui/icons-material/Cake';
 import BoyIcon from '@mui/icons-material/Boy';
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom'
+
 const UserSide = () => {
   const user1 = JSON.parse(localStorage.getItem("user"));
   const token = Cookies.get('token');
@@ -23,17 +24,17 @@ const UserSide = () => {
   const [modal, setModal] = useState(false) 
   const [status, setStatus] = useState() 
   const authAxios = axios.create({
-    baseURL: 'https://showroomcar104.onrender.com',
+    baseURL: 'http://localhost:9090/api/v1',
     headers:{
       Authorization:`Bearer ${token}`
     }
   })
   const sendRequestSU = async ()=>{
     const res = await authAxios
-    .get(`/users/me`)
+    .get(`/user/${user1.id}`)
     .catch((err)=>console.log(err))
 
-    const data = await res.data.user;
+    const data = await res.data.data;
     console.log(data);
     return data;
   }
@@ -49,19 +50,19 @@ const UserSide = () => {
     /*modalRef.current=true;
     console.log(modalRef.current);*/
   }
-  console.log(user1);
+  //console.log(user1);
   return (<>
     {userData && <div className={classes.User} style={{width:"100%",minHeight:"800px",height:"100%",backgroundColor:"#650707"}}>
       <div className={classes.UserSide}>
         <img style={{borderRadius:"50%",marginLeft:"22px"}} src={userimg} alt='rr'></img>
         <EditIcon onClick={handleModal}  
         style={{ color: '#ffff', fontSize:'25px',cursor:"pointer" }} />
-        <p className={classes.SideRole}>{userData.name}</p>
+        <p className={classes.SideRole}>{userData.username}</p>
         <p className={classes.SideMail}>{userData.email}</p>
         <div className={classes.Stack}>
         <Stack direction="row" alignItems="center" gap={1}>
           <Grid3x3Icon  style={{ color: '#ffff', fontSize:'25px' }}/>
-          <p style={{ color: '#AFAFAF',fontSize:'14px' }}>{(userData.mauser && userData.mauser!=="undefined")? userData.mauser : "Chưa thiết lập"}</p>
+          <p style={{ color: '#AFAFAF',fontSize:'14px' }}>{(userData.id && userData.id!=="undefined")? userData.id : "Chưa thiết lập"}</p>
         </Stack>
         <Stack direction="row" alignItems="center" gap={1}>
           <BoyIcon  style={{ color: '#ffff', fontSize:'25px' }}/>
