@@ -1,10 +1,11 @@
 import styles from "./ReadNews.module.css";
 import "./ReadNews.css"
 import { useParams, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLayoutEffect } from "react";
 import NewsSidebar from "../News/components/NewsSidebar";
-import { getNewsById } from "../../Apis2/HandleApiNews";
+// import { getNewsById } from "../../Apis2/HandleApiNews";
+import axios from "axios";
 
 // scroll to top when navigate
 const Wrapper = ({ children }) => {
@@ -15,21 +16,24 @@ const Wrapper = ({ children }) => {
   return children;
 };
 
+
 function ReadNews() {
   const [news, setNews] = useState(null);
   const { id } = useParams();
 
-  useEffect(() => {
-    // fetch the news from the API
-    fetch("http://localhost:8080/api/v1/news/1")
-      .then((response) => response.json())
-      .then((data) => setNews(data))
-      .catch((error) => console.error(error));
-  }, []);
+// create an axios instance with the base url
+const api = axios.create({
+  baseURL: "http://localhost:8080/api/v1/"
+});
 
-  // useEffect(() => {
-  //   getNewsById(id).then(res => setNews(res))
-  // }, [id]);
+  api.get(`news/${id}`) // this will fetch http://localhost:8080/api/v1/news/1 if the url is /news/1
+    .then(response => {
+	    setNews(response.data);
+    })
+    .catch(error => {
+      // handle the error
+	    console.log(error);
+    });
 
   return (
     <Wrapper>
