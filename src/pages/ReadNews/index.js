@@ -4,7 +4,6 @@ import { useParams, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useLayoutEffect } from "react";
 import NewsSidebar from "../News/components/NewsSidebar";
-// import { getNewsById } from "../../Apis2/HandleApiNews";
 import axios from "axios";
 
 // scroll to top when navigate
@@ -15,6 +14,14 @@ const Wrapper = ({ children }) => {
   }, [location.pathname]);
   return children;
 };
+
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${day}/${month}/${year}`;
+  }
 
 
 function ReadNews() {
@@ -43,9 +50,17 @@ const api = axios.create({
             {news &&
               <div>
                 <h3 className={styles.title}>{news.title}</h3>
-                <p className={styles.date}>{news.date}</p>
-		    <img className={styles.image} src={news.image} alt={news.title} />
-                <div className={styles.detail}>{news.content}</div>
+                <p className={styles.date}>{formatDate(news.date)}</p>
+		    <img src={news.image} className={styles.detail} alt={news.title} />
+                <p className={styles.news}>{news.content}</p>
+                <p className={styles.news}>{news.content}</p>
+                <p className={styles.news}>{news.content}</p>
+                <p className={styles.news}>{news.content}</p>
+		    <img src={news.image} className={styles.detail} alt={news.title} />
+                <p className={styles.news}>{news.content}</p>
+                <p className={styles.news}>{news.content}</p>
+                <p className={styles.news}>{news.content}</p>
+                <p className={styles.news}>{news.content}</p>
               </div>
             }
           </section>
