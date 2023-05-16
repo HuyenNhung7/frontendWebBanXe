@@ -29,7 +29,7 @@ const getXeByBranch = async (pageIndex = 0, branch) => {
 };
 
 const getXeByNameOrBranch = async (pageIndex = 0, branch, ten) => {
-    return await axiosInstance.get(`/xe/find?ten=${ten}thuongHieu=${branch}&page=${pageIndex}&size=${5}`);
+    return await axiosInstance.get(`/xe/find?ten=${ten}&thuongHieu=${branch}&page=${pageIndex}&size=${5}`);
 };
 
 const getXeByDeXuat = async () => {
