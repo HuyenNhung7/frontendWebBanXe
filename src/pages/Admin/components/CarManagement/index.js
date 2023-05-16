@@ -1,6 +1,7 @@
 import images from "../../../../assets/image";
 import styles from "./CarManagement.module.css";
 import "./CarManagement.css";
+import HandleApiXe from "../../../../Apis2/HandleApiXe";
 
 import { styled } from "@mui/material/styles";
 import {
@@ -71,30 +72,31 @@ function CarManagement() {
         "Hyundai",
     ];
 
-    const pageSize = 15;
+    const pageSize = 5;
 
     // Get API
     useEffect(() => {
         if (typeCar === "All") {
-            HandleApi.getCarByPageIndex(pageIndex).then((res) => {
-                setData(res.cars);
-                setNewData(res.cars);
-                setDataLength(res.totalCarsFilter);
+            HandleApiXe.getXeByPageIndex(pageIndex).then((res) => {
+                setData(res.data);
+                setNewData(res.data);
+                setDataLength(res.totalXe);
             });
         } else {
-            HandleApi.getCarByPageIndexBrand(typeCar, pageIndex).then((res) => {
-                setData(res.cars);
-                setNewData(res.cars);
-                setDataLength(res.totalCarsFilter);
+            HandleApiXe.getXeByBranch(pageIndex, typeCar).then((res) => {
+                setData(res.data);
+                setNewData(res.data);
+                setDataLength(res.totalXe);
             });
         }
     }, [pageIndex, typeCar]);
 
     useEffect(() => {
-        HandleApi.getCarByPageIndex(0).then((res) => {
-            setData(res.cars);
-            setNewData(res.cars);
-            setDataLength(res.totalCarsFilter);
+        HandleApiXe.getXeByPageIndex(0).then((res) => {
+            console.log(res)
+            setData(res.data);
+            setNewData(res.data);
+            setDataLength(res.totalXe);
         });
     }, []);
 
@@ -167,16 +169,16 @@ function CarManagement() {
         if (typeCar !== "All") {
             setNewData(
                 data.filter((item) => {
-                    return item.thuonghieu == typeCar;
+                    return item.thuongHieu == typeCar;
                 })
             );
             setPageIndex(0);
         }
         else setNewData(data);
         if (searchValue.trim() !== "") {
-            HandleApi.getCarByName(searchValue.trim()).then(async (res) => {
-                await setNewData(res.cars);
-                await setDataLength(res.totalCarsFilter);
+            HandleApiXe.getXeByBranch(pageIndex, searchValue.trim()).then(async (res) => {
+                await setNewData(res.data);
+                await setDataLength(res.totalXe);
             });
         }
         setPageIndex(0);
@@ -196,7 +198,7 @@ function CarManagement() {
     };
 
     const handleDeleteItem = async (id) => {
-        HandleApi.deleteCar(id)
+        HandleApiXe.deleteXe(id)
             .then((res) => {
                 console.log(id);
                 setOpenDeleteModal(false);
@@ -208,13 +210,14 @@ function CarManagement() {
                     timer: 1500,
                 });
                 console.log(data);
-                setNewData(data.filter((item) => item._id !== id));
+                setNewData(data.filter((item) => item.id !== id));
+                window.location.reload();
             })
             .catch((err) => {
                 Swal.fire({
                     position: "center",
                     icon: "error",
-                    title: "Xóa bài viết thất bại!",
+                    title: "Xóa xe thất bại!",
                     showConfirmButton: false,
                     timer: 1500,
                 });
@@ -223,8 +226,9 @@ function CarManagement() {
 
     const handleClickUpdate = async (id) => {
         console.log(id);
-        HandleApi.getCarById(id)
+        HandleApiXe.getXeById(id)
             .then(async (res) => {
+                console.log(res)
                 await setUpdateCar(res);
                 await setType("update");
                 console.log(updateCar);
@@ -235,7 +239,7 @@ function CarManagement() {
     };
 
     const handleReadInfo = async (id) => {
-        HandleApi.getCarById(id)
+        HandleApiXe.getXeById(id)
             .then(async (res) => {
                 await setUpdateCar(res);
                 await setType("read");
@@ -338,7 +342,7 @@ function CarManagement() {
     //         color: 'red',
     //     }
     // }
-    const currentPost = newData.slice(pageIndex * 15 - 15, pageIndex * 15);
+    // const currentPost = newData.slice(pageIndex * 5 - 5, pageIndex * 5);
 
     return (
         <div>
@@ -464,34 +468,34 @@ function CarManagement() {
                                 <Grid item xs={0.9}>
                                     <Item>
                                         <img
-                                            src={item.hinhanh}
+                                            src={item.hinhAnh}
                                             className={styles.content_image}
                                             alt="Car"
                                         />
                                     </Item>
                                 </Grid>
                                 <Grid item xs={0.8}>
-                                    <Item>{item.macar}</Item>
+                                    <Item>{item.id}</Item>
                                 </Grid>
                                 <Grid item xs={1.8}>
                                     <Item>{item.ten}</Item>
                                 </Grid>
                                 <Grid item xs={1.6}>
-                                    <Item>{item.thuonghieu}</Item>
+                                    <Item>{item.thuongHieu}</Item>
                                 </Grid>
                                 <Grid item xs={1.8}>
                                     <Item>
-                                        {item.gia.toLocaleString() + " VNĐ"}
+                                        {item.giaXe.toLocaleString() + " VNĐ"}
                                     </Item>
                                 </Grid>
                                 {/* <Grid item xs={2.4}>
                                     <Item>{item.dongco}</Item>
                                 </Grid> */}
                                 <Grid item xs={1.5}>
-                                    <Item>{item.socho}</Item>
+                                    <Item>{item.soCho}</Item>
                                 </Grid>
                                 <Grid item xs={1.2}>
-                                    <Item>{item.soluong}</Item>
+                                    <Item>{item.soLuong}</Item>
                                 </Grid>
                                 <Grid item xs={1.9}>
                                     {/* Update, delete button */}
@@ -504,7 +508,7 @@ function CarManagement() {
                                                 marginRight: "12px",
                                             }}
                                             onClick={() =>
-                                                handleReadInfo(item._id)
+                                                handleReadInfo(item.id)
                                             }
                                         >
                                             Chi tiết
@@ -515,7 +519,7 @@ function CarManagement() {
                                                 size="medium"
                                                 sx={{ padding: "8px 6px" }}
                                                 onClick={() => {
-                                                    handleClickUpdate(item._id);
+                                                    handleClickUpdate(item.id);
                                                 }}
                                             >
                                                 <Edit
@@ -532,7 +536,7 @@ function CarManagement() {
                                                 color="error"
                                                 onClick={() => {
                                                     setOpenDeleteModal(true);
-                                                    setId(item._id);
+                                                    setId(item.id);
                                                 }}
                                                 // onClick={() => {
                                                 //     handleClickDelete(item._id);

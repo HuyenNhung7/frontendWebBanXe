@@ -5,8 +5,10 @@ import CarCard from './CarCard';
 import axios from 'axios';
 import style from './Search.module.css'
 import Pagination from './Pagination';
+import HandleApiXe from '../../Apis2/HandleApiXe';
 
 const Search = () => {
+    // const [data, setData] = useState();
     const [searchParams] = useSearchParams();
     const [cars, setCars] = useState();
     const [currentPage, setCurrentPage] = useState(parseInt(0))
@@ -19,12 +21,18 @@ const Search = () => {
   console.log(test); 
   const sendRequest = async(number=currentPage)=>{
     const res = await axios
-    .get(`https://showroomcar104.onrender.com/cars?search=${test}&pageIndex=${number}&pageSize=${postPerPage}`)
+    .get(`http://localhost:8080/api/v1/xe/find?ten=${test}&thuongHieu=${test}&page=${number}&size=${postPerPage}`)
     .catch((err)=>console.log(err))
     setLoading(false);
     const data = await res.data;
+    // const data = {};
+    // await HandleApiXe.getXeByNameOrBranch(number, test, test).then((res) => {
+    //   data = res.data;
+    //   console.log(data);
+    // });
     console.log(data);
     return data;
+    
   }
 
   /*useEffect(()=>{
@@ -71,10 +79,10 @@ const Search = () => {
     <div className={style.SearchPage}>
     {loading? <h1>loading</h1> : 
     <div style={{textAlign:"center"}}>
-    {cars.cars && cars.totalCarsFilter!==0?<h1 style={{marginTop:'40px', fontSize:'40px'}}>Kết quả tìm kiếm cho "{searchParams.get('find')}"</h1>
+    {cars.data && cars.totalXeByFilter!==0?<h1 style={{marginTop:'40px', fontSize:'40px'}}>Kết quả tìm kiếm cho "{searchParams.get('find')}"</h1>
     :<h1 style={{marginTop:'40px', fontSize:'40px',margin:"150px 0"}}>Không có kết quả cho "{searchParams.get('find')}"</h1>}
     <div className={style.MainSearch} style={{display:"flex",padding:"20px",flexWrap:"wrap"}}>
-        {cars.cars && cars.cars.map((car,index)=>
+        {cars.data && cars.data.map((car,index)=>
         <CarCard data={car} key={index}/>)}
     </div>
         {cars.cars&& cars.totalCarsFilter!==0?

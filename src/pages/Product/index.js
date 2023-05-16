@@ -1,6 +1,7 @@
 import styles from "./Product.module.css"
 import ItemProduct from "./ItemProduct";
 import HandleApi from "../../Apis/HandleApi"
+import HandleApiXe from "../../Apis2/HandleApiXe";
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom'
 
@@ -12,10 +13,10 @@ function Product() {
 console.log(carBrand);
 
   useEffect(() => {
-    HandleApi.getCarByBrand(carBrand)
+    HandleApiXe.getXeByBranch(0, carBrand)
     .then((res) => {
       console.log(res);
-      setData(res.cars)
+      setData(res.data)
     })
     .catch(err => console.log(err));
   }, [])

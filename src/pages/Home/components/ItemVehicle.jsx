@@ -4,9 +4,9 @@ function ItemVehicle({data}) {
     return(
         <div className={style.itemCarContainer}>
             <p className={style.carName}>{data.ten}</p>
-            <p className={style.carInfo}>{data.gia.toLocaleString() + " VNĐ"}</p>
-            <img src={data.hinhanh} alt="BMW car" width={300} height={170}/>
-            <Link to={`/detailproduct/${data._id}`}>
+            <p className={style.carInfo}>{data.giaXe + " VNĐ"}</p>
+            <img src={data.hinhAnh} alt="BMW car" width={300} height={170}/>
+            <Link to={`/detailproduct/${data.id}`}>
                 <button className={style.buttonDiscoverMore}>Chi tiết</button>
             </Link>
             
@@ -14,3 +14,5 @@ function ItemVehicle({data}) {
     );
 }
 export default ItemVehicle;
+
+// data.giaXe.toLocaleString()

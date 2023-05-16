@@ -5,8 +5,8 @@ function CarCard({data}) {
     return ( 
         <div className={style.carContainer}>
             <div className={style.carName}>{data.ten}</div>
-            <img className={style.carImg} src={data.hinhanh} alt={data.ten} />
-            <Link className={style.carLink} to={`/detailproduct/${data._id}`} >Chi Tiết</Link>
+            <img className={style.carImg} src={data.hinhAnh} alt={data.ten} />
+            <Link className={style.carLink} to={`/detailproduct/${data.id}`} >Chi Tiết</Link>
         </div>
      );
 }

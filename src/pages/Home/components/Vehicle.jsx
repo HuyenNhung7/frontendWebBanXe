@@ -2,13 +2,16 @@ import style from "./Vehicle.module.css";
 import ItemVehicle from "./ItemVehicle";
 import images from "../../../assets/image";
 import HandleApi from "../../../Apis/HandleApi";
+import HandleApiXe from "../../../Apis2/HandleApiXe";
 import { useState, useEffect, memo } from "react";
+
 function Vehicle() {
     const [data,setData] = useState([]);
     const [branch,setBranch] = useState("Toyota");
     useEffect(() => {
-        HandleApi.getSixCarsByBranch(branch).then((res) => {
-          setData(res.cars)
+        HandleApiXe.getXeByBranch(0, branch).then((res) => {
+            console.log(res.data)
+          setData(res.data)
         })
         .catch(err => console.log(err));
       }, [branch])
