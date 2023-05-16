@@ -3,9 +3,11 @@ import classes from "../Header.module.css"
 import { useState, useRef, useEffect, memo } from "react";
 import axios from 'axios';
 import { Link,useNavigate } from 'react-router-dom';
+import HandleApiXe from '../../../Apis2/HandleApiXe';
 
 
 const AutoComplete = () => {
+    // const [data, setData] = useState();
     const [suggestions, setSuggestions] = useState([]);
     const [suggestionsActive, setSuggestionsActive] = useState(false);
     const [value, setValue] = useState("");
@@ -14,9 +16,12 @@ const AutoComplete = () => {
 
     const sendRequest = async(query)=>{
       const res = await axios
-      .get(`https://showroomcar104.onrender.com/cars?search=${query}`)
+      .get(`http://localhost:8080/api/v1/xe/find?ten=${query}&thuongHieu=${query}&page=${0}&size=${5}`)
       .catch((err)=>console.log(err))
-      const data = await res.data.cars;
+      const data = await res.data.data;
+      // await HandleApiXe.getXeByNameOrBranch(0, test, test).then(async (res) => {
+      //   await setData(res.data);
+      // });
       console.log(data);
       return data;
     }
@@ -79,7 +84,7 @@ const AutoComplete = () => {
                   className={classes.submenu}
                 >
                   <Link 
-                  to={`/detailproduct/${suggestion._id}`} style={{color: "black", textDecoration:"none"}}>{suggestion.ten}</Link>
+                  to={`/detailproduct/${suggestion.id}`} style={{color: "black", textDecoration:"none"}}>{suggestion.ten}</Link>
                 </li>
               );
             })}

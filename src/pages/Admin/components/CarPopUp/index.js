@@ -7,6 +7,7 @@ import { Box } from "@mui/system";
 import { Grid, Button, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import HandleApi from "../../../../Apis/HandleApi";
+import HandleApiXe from "../../../../Apis2/HandleApiXe";
 
 function CarPopup({ type, setType, updateCar, setUpdateCar }) {
     const [thumbnail, setThumbnail] = useState();
@@ -161,6 +162,26 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
         soluong: Number(quantity),
     };
 
+    const data1 = {
+        ten: carName,
+        thuongHieu: brand,
+        dongCo: engine,
+        soCho: Number(seat),
+        kichThuoc: size,
+        nguonGoc: origin,
+        vanTocToiDa: speed,
+        dungTich: capacity,
+        tieuHaoNhienLieu: fuel,
+        congSuatCucDai: power,
+        mauSac: color,
+        giaXe: price,
+        hinhAnh: thumbnail,
+        moTa: desc,
+        namSanXuat: Number(year),
+        soLuong: Number(quantity),
+        deXuat: true,
+    };
+
     const handleBlur = (e) => {
         if (e.target.value === "") {
             // setErrorName("Vui lòng nhập dữ liệu ");
@@ -172,7 +193,8 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
 
     const handleCreateCar = async (e) => {
         e.preventDefault();
-        HandleApi.createCar(data)
+        console.log(data1)
+        HandleApiXe.addXe(data1)
             .then(async (res) => {
                 await Swal.fire({
                     position: "center",
@@ -196,8 +218,8 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
     };
 
     const handleUpdateCar = async () => {
-        console.log(updateCar._id);
-        HandleApi.updateCar(updateCar._id, data)
+        console.log(updateCar.id);
+        HandleApiXe.updateXe(updateCar.id, data1)
             .then(async (res) => {
                 await Swal.fire({
                     position: "center",
@@ -217,22 +239,22 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
     useEffect(() => {
         if (updateCar !== {}) {
             setCarName(updateCar.ten);
-            setCarCode(updateCar.macar);
-            setPrice(updateCar.gia);
-            setThumbnail(updateCar.hinhanh);
-            setBrand(updateCar.thuonghieu);
-            setSeat(updateCar.socho);
-            setEngine(updateCar.dongco);
-            setPower(updateCar.congsuatcucdai);
-            setCapacity(updateCar.dungtich);
-            setYear(updateCar.namsanxuat);
-            setFuel(updateCar.tieuhaonhienlieu);
-            setSize(updateCar.kichthuoc);
-            setColor(updateCar.mausac);
-            setDesc(updateCar.mota);
-            setOrigin(updateCar.nguongoc);
-            setSpeed(updateCar.vantoctoida);
-            setQuantity(updateCar.soluong);
+            setCarCode(updateCar.id);
+            setPrice(updateCar.giaXe);
+            setThumbnail(updateCar.hinhAnh);
+            setBrand(updateCar.thuongHieu);
+            setSeat(updateCar.soCho);
+            setEngine(updateCar.dongCo);
+            setPower(updateCar.congSuatCucDai);
+            setCapacity(updateCar.dungTich);
+            setYear(updateCar.namSanXuat);
+            setFuel(updateCar.tieuHaoNhienLieu);
+            setSize(updateCar.kichThuoc);
+            setColor(updateCar.mauSac);
+            setDesc(updateCar.moTa);
+            setOrigin(updateCar.nguonGoc);
+            setSpeed(updateCar.vanTocToiDa);
+            setQuantity(updateCar.soLuong);
         }
     }, [updateCar]);
 
@@ -413,45 +435,45 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
                                     <Item sx={{ fontWeight: "bold" }}>
                                         {"Tên xe: " + updateCar.ten}
                                     </Item>
-                                    <Item>{"Mã xe: " + updateCar.macar}</Item>
+                                    <Item>{"Mã xe: " + updateCar.id}</Item>
                                     <Item>
-                                        {"Thương hiệu: " + updateCar.thuonghieu}
+                                        {"Thương hiệu: " + updateCar.thuongHieu}
                                     </Item>
                                     <Item>
-                                        {"Động cơ: " + updateCar.dongco}
+                                        {"Động cơ: " + updateCar.dongCo}
                                     </Item>
                                     <Item>
-                                        {"Số chỗ ngồi: " + updateCar.socho}
+                                        {"Số chỗ ngồi: " + updateCar.soCho}
                                     </Item>
                                     <Item>
-                                        {"Kích thước: " + updateCar.kichthuoc}
+                                        {"Kích thước: " + updateCar.kichThuoc}
                                     </Item>
                                     <Item>
                                         {"Vận tốc tối đa: " +
-                                            updateCar.vantoctoida}
+                                            updateCar.vanTocToiDa}
                                     </Item>
                                     <Item>
-                                        {"Dung tích: " + updateCar.dungtich}
+                                        {"Dung tích: " + updateCar.dungTich}
                                     </Item>
                                     <Item>
                                         {"Tiêu hao nhiên liệu: " +
-                                            updateCar.tieuhaonhienlieu}
+                                            updateCar.tieuHaoNhienLieu}
                                     </Item>
                                     <Item>
                                         {"Công suất cực đại: " +
-                                            updateCar.congsuatcucdai}
+                                            updateCar.congSuatCucDai}
                                     </Item>
                                     <Item>
-                                        {"Màu sắc: " + updateCar.mausac}
+                                        {"Màu sắc: " + updateCar.mauSac}
                                     </Item>
                                     <Item>
-                                        {"Số lượng xe: " + updateCar.soluong}
+                                        {"Số lượng xe: " + updateCar.soLuong}
                                     </Item>
                                     {/* </div> */}
                                 </Grid>
                                 <Grid item xs={6}>
                                     <img
-                                        src={updateCar.hinhanh}
+                                        src={updateCar.hinhAnh}
                                         className={styles.readImg}
                                     ></img>
                                     <Item
@@ -463,7 +485,7 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
                                         }}
                                     >
                                         {"Giá: " +
-                                            updateCar.gia.toLocaleString() +
+                                            updateCar.giaXe.toLocaleString() +
                                             " VNĐ"}
                                     </Item>
                                 </Grid>

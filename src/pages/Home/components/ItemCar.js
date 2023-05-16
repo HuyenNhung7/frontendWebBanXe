@@ -7,7 +7,7 @@ function ItemCar({ data }) {
         <div className={style.carContainer}>
             <div className={style.carName}>{data.ten}</div>
             <a href={`/detailproduct/${data._id}`}>
-                <img className={style.carImg} src={data.hinhanh} alt={data.ten} />
+                <img className={style.carImg} src={data.hinhAnh} alt={data.ten} />
             </a>
             <a className={style.carLink} href="/contact">
                 Liên hệ

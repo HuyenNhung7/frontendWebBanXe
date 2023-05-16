@@ -6,13 +6,14 @@ import "./SliderCar.css";
 import EastIcon from "@mui/icons-material/East";
 import { useEffect, useState, memo } from 'react';
 import HandleApi from "../../../Apis/HandleApi";
+import HandleApiXe from "../../../Apis2/HandleApiXe";
 
 function SliderCar() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        HandleApi.getCarAdvice(true).then((res) => {
-            setData(res.cars);
+        HandleApiXe.getXeByDeXuat().then((res) => {
+            setData(res.data);
           });
     }, []);
 
