@@ -40,6 +40,7 @@ function InformationDetailProduct(pros) {
                     <img src={data.hinhanh} alt="image car" />
                 </div>
             </div>
+            
             {/* <div className={style.buy}> */}
                 <a href='/contact' className={style.buy}>LIÊN HỆ</a>
             {/* </div> */}

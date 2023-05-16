@@ -1,12 +1,19 @@
 import InformationDetailProduct from "./components/InformationDetailProduct";
+import { useState } from "react";
+import "./DetailBottom.css";
+import DetailBottom from "./DetailBottom";
 
-function detailproduct () {
+
+function Detailproduct () {
+
     return (
-
         <div>
             <InformationDetailProduct/>
+            <div>
+                <DetailBottom />
+            </div>
             
         </div>
     );
 }
-export default detailproduct;
+export default Detailproduct;
