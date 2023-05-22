@@ -30,10 +30,10 @@ function ReadNews() {
 
 // create an axios instance with the base url
 const api = axios.create({
-  baseURL: "http://localhost:8080/api/v1/"
+  baseURL: "http://localhost:8080/api/v1"
 });
 
-  api.get(`news/${id}`) // this will fetch http://localhost:8080/api/v1/news/1 if the url is /news/1
+  api.get(`/news/${id}`) // this will fetch http://localhost:8080/api/v1/news/1 if the url is /news/1
     .then(response => {
 	    setNews(response.data);
     })
