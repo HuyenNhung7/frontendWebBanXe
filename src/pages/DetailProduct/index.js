@@ -2,6 +2,8 @@ import InformationDetailProduct from "./components/InformationDetailProduct";
 import { useState } from "react";
 import "./DetailBottom.css";
 import DetailBottom from "./DetailBottom";
+import 'tailwindcss/tailwind.css';
+
 
 
 function Detailproduct () {
@@ -10,7 +12,6 @@ function Detailproduct () {
         <div>
             <InformationDetailProduct/>
             <div>
-                <DetailBottom />
             </div>
             
         </div>

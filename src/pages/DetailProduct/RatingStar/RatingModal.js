@@ -3,9 +3,13 @@
 import classes from "./RatingModal.module.css";
 import CloseIcon from '@mui/icons-material/Close';
 import StarRating from "../StarRating";
+import Swal from "sweetalert2";
+import HandleApiInvoice from "../../../Apis/HandleApiInvoice";
 
 import { useState } from "react";
 const RatingModal = (props) => {
+    console.log(props.data);
+    let user = JSON.parse(localStorage.getItem("user"));
 
     const [danhGia, setDanhGia] = useState()
 
@@ -25,10 +29,9 @@ const RatingModal = (props) => {
     }
 
     const dgData = {
-        makh: props.user.makh,
-        masp: "",
-        tenkh: props.user.hoten,
-        binhluan: danhGia,
+        xe:{id:2},
+        user: {id:user.id},
+        binhLuan: danhGia,
         rating: ratingValue,
     }
 
@@ -39,6 +42,16 @@ const RatingModal = (props) => {
             newPrice: 27390000,
             note: ""
         };
+    
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            HandleApiInvoice.createDG(dgData).then((res)=>{
+                console.log(res);
+                props.setCloseRatingModal(1);    
+            })
+            console.log(dgData);
+        }
+        
     {return props.user?(     
         <div className={props.closeRatingModal === 0? classes.overlay : "hidden"}
             onClick={()=>props.setCloseRatingModal(1)}>
@@ -55,9 +68,9 @@ const RatingModal = (props) => {
                 <div className="px-[20px] py-[16px]">
                     {/* Phần trên của body */}
                     <div className="text-center text-slate-600">
-                        <img src={product.image}
+                        <img src={props.data.hinhanh}
                         className="w-[96px] block mx-auto"/>
-                        <div className="text-[18px] my-[10px]">{product.name}</div>
+                        <div className="text-[18px] my-[10px]">{props.data.ten}</div>
                         <div className="h-[64px]">
                             <StarRating
                                 size={28}
@@ -80,7 +93,7 @@ const RatingModal = (props) => {
 
                     <hr className="h-[1px] w-full my-[15px] bg-slate-300"/>
                     {/* Phần dưới của body */}
-                    <div>
+                    {/*<div>
                         <div className="h-[26px] flex items-center text-[16px] text-slate-600">
                             <input type="radio" value="Male" name="gender" /> 
                             <span className="ml-[4px] mr-[15px]">Anh</span>
@@ -97,12 +110,12 @@ const RatingModal = (props) => {
                             <input className="px-[10px] w-full outline-none border-[1px] border-slate-300 rounded-[4px] h-[36px]"
                                     placeholder="Nhập email để nhận thông báo phản hồi"></input>
                         </div>
-                    </div>
+                     </div>*/}
                 </div>
                 {/* footer modal */}
                 <div className="h-[50px] text-center">
                 <button className="text-[16px] text-white bg-blue-600 w-[160px]
-                            rounded-[5px] font-extralight p-[10px]">HOÀN TẤT</button>
+                            rounded-[5px] font-extralight p-[10px]" onClick={handleSubmit}>HOÀN TẤT</button>
                 </div>
 
             </div>

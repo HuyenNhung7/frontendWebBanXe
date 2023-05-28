@@ -1,18 +1,52 @@
-import { useState } from "react";
 import "./DetailBottom.css";
 import { Description } from "@mui/icons-material";
 import StarRating from "./StarRating";
 import RatedStar from "./RatingStar/RatedStar";
 import RatingModal from "./RatingStar/RatingModal";
+import HandleApiInvoice from "../../Apis/HandleApiInvoice";
 import CheckIcon from '@mui/icons-material/Check';
 import StaticRatedStar from "./RatingStar/StaticRatedStar.js";
+import { useState,useEffect } from "react";
 import Comment from "./Comment/Comment";
-function DetailBottom() {
+function DetailBottom(props) {
     const [tongleState, setTongleState] = useState(1);
+    const [dataLength, setDataLength] = useState()
+    const [rating, setRating] = useState()
     const [filterIndex, setFilterIndex] = useState(0);
+    const [data, setData] = useState([]);
     const [user, setUser] = useState(JSON.parse(window.localStorage.getItem("user")))
 
+    function tinhRatingTrungBinh(lst) {
+        if (lst.length === 0) {
+        
+          return 0; // Trả về 0 nếu mảng rỗng
+        }
+      
+        const totalRating = lst.reduce((accumulator, item) => {
+          return accumulator + item.rating; // Tính tổng các rating
+        }, 0);
+      
+        const averageRating = totalRating / lst.length; // Tính giá trị trung bình
+      
+        return averageRating;
+      }
 
+    useEffect(() => {
+        HandleApiInvoice.getDGBySP(2,filterIndex).then((res) => {
+            setData(res.lst);
+            setDataLength(res.count);
+           
+            console.log(rating);
+            console.log(data);
+        }).then(()=>{
+            if(filterIndex===0)
+            setDataLength(tinhRatingTrungBinh(data))
+        
+        })
+        console.log(filterIndex);
+    },[filterIndex]);
+
+    console.log(props.id);
     // hàm set giá trị cho tab được chon
     const tongleTab = function(index) {
         setTongleState(index);
@@ -92,7 +126,7 @@ function DetailBottom() {
     return (<div className="w-3/4 mx-auto grid grid-cols-1 my-[50px]">
        
     <div className="w-[800px] place-self-center">
-                <div className="tab-bar">
+                {/*<div className="tab-bar">
                     <div className={tongleState === 1 ? "tab-item tab-item-active":"tab-item"}
                         onClick={() => tongleTab(1)}>
                         <div className="tab-item-title">Mô tả sản phẩm</div>
@@ -112,10 +146,10 @@ function DetailBottom() {
                         <div className="tab-item-title">Hỏi đáp</div>
                     </div>
                     <div className="line"></div>
-                </div>
+                </div>*/}
                 {/* Tab content */}
                 <div class="tab-content w-full">
-                    <div class={tongleState === 1 ? "text-ellipsis overflow-hidden block":"hidden"}>
+                {/*    <div class={tongleState === 1 ? "text-ellipsis overflow-hidden block":"hidden"}>
                             <h1 className="text-[26px] font-bold">{demoProduct.name}</h1>
                             <p className="text-[14px]">{demoProduct.description.moTaChung}</p>
                      
@@ -124,7 +158,7 @@ function DetailBottom() {
                        
                             <h2 className="text-[18px] font-bold mt-[10px]">{demoProduct.description.title2}</h2>
                             <p className="text-[14px]">{demoProduct.description.des2}</p>
-                    </div>
+            </div>*/}
                     <div class={tongleState === 2 ? "text-ellipsis overflow-hidden block":"hidden"}>
                         <table className="w-full table-fixed text-[16px] text-slate-600 border-collapse border border-slate-400">
                             <tbody>
@@ -153,13 +187,13 @@ function DetailBottom() {
                     <div className="grid grid-cols-3 justify-items-stretch text-[16px] py-[20px] border-b-[2px] border-slate-100">
                         <div className="text-center">
                             <div className="text-slate-700">Đánh giá trung bình</div>
-                            <div className="text-[36px] text-red-600">5/5</div>
+                            <div className="text-[36px] text-red-600">{tinhRatingTrungBinh(data)}/5</div>
                             <div className="flex justify-center">
                             <StaticRatedStar
                                 size={16}
                                 rating={5}/>
                             </div>
-                            <div>1014 đánh giá</div>
+                            <div>{data?data.length:0}</div>
                         </div>
                         <div className="my-auto">
                             <RatedStar/>
@@ -172,13 +206,7 @@ function DetailBottom() {
                         </div>
                     </div>
                     <div className="px-[25px] h-[56px] text-[14px] text-slate-500 bg-slate-100 flex items-center">
-                        <div>Lọc xem theo:</div>
-                        <div className={filterIndex === 6 ? "px-[10px] py-[3px] mx-[10px] rounded-[4px] align-middle cursor-pointer border-[1px] border-blue-400 hover:bg-blue-400 hover:text-white text-blue-400" 
-                        :"px-[10px] py-[3px] mx-[10px] rounded-[4px] align-middle scursor-pointer border-[1px] border-slate-300 hover:bg-slate-300"}
-                            onClick={()=>setFilterIndex(6)}>
-                                <span className={filterIndex === 6 ? "font-bold": "hidden"}><CheckIcon fontSize="20"/></span>
-                                <span>Đã mua hàng</span>
-                            </div>
+                        <div>Lọc xem theo:</div>                       
 
                         {[...Array(5)].map((filterbtn, index) => {
                             const star = index + 1;
@@ -190,12 +218,13 @@ function DetailBottom() {
                             </div>
                         })}
                     </div>
-                    <Comment/>
+                    <Comment masp={props.id} data={data}/>
                 </div>
             <RatingModal 
                 closeRatingModal = {closeRatingModal}
                 setCloseRatingModal = {setCloseRatingModal}
-                user = {user}/>
+                user = {user}
+                data={props.data}/>
             
     </div>);
 }

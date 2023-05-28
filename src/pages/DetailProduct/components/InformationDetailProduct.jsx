@@ -1,10 +1,11 @@
 import style from './InformationDetailProduct.module.css';
 import HandleApi from '../../../Apis/HandleApi';
 import { useEffect } from 'react';
+import DetailBottom from "../DetailBottom.js";
 import { useParams } from 'react-router-dom'
 import { useState } from 'react';
 
-function InformationDetailProduct(pros) {
+function InformationDetailProduct(props) {
     const { productId } = useParams();
     const [data, setData] = useState([]);
     console.log(productId);
@@ -44,6 +45,7 @@ function InformationDetailProduct(pros) {
             {/* <div className={style.buy}> */}
                 <a href='/contact' className={style.buy}>LIÊN HỆ</a>
             {/* </div> */}
+            <DetailBottom id={productId} data={data}/>
         </div>
         
     );

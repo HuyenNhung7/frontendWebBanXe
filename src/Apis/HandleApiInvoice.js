@@ -34,6 +34,16 @@ const getCustomerByMaUser = async(makh) => {
     return await axiosInstance2.get(`api/v1/user/find/${makh}`)
 }
 
+const getDGBySP = async(masp,rating) => {
+    return await axiosInstance2.get(`danhgia/${masp}?rating=${rating}`)
+}
+
+const createDG = async (data) => {
+    return await axiosInstance2.post("/danhgia", data);
+}
+
+
+
  //eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getInvoiceByTinhTrang,
@@ -45,4 +55,6 @@ export default {
     getCarByMaCar,
     getCustomerByMaUser,
     getInvoiceByPageIndex,
+    getDGBySP,
+    createDG
 };
