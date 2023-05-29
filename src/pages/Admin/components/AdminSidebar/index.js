@@ -9,6 +9,7 @@ import {
     DirectionsCar,
     ContactMail,
     ReceiptLong,
+    Discount
 } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
@@ -26,6 +27,7 @@ function AdminSidebar() {
         "Quản lý tin tức",
         "Quản lý form",
         "Quản lý hóa đơn",
+        "Quản lý khuyến mãi"
     ];
     const AdminLink = [
         "/dashboard",
@@ -34,18 +36,21 @@ function AdminSidebar() {
         "/dashboard/news-management",
         "/dashboard/form-management",
         "/dashboard/invoice-management",
+        "/dashboard/promotion-management"
     ];
     const StaffFunc = [
         "Quản lý ô tô",
         "Quản lý khách hàng",
         "Quản lý form",
         "Quản lý hóa đơn",
+        "Quản lý khuyến mãi",
     ];
     const StaffLink = [
         "/dashboard",
         "/dashboard/customer-management",
         "/dashboard/form-management",
         "/dashboard/invoice-management",
+        "/dashboard/promotion-management",
     ];
     const adminFuncIcon = [
         <DirectionsCar className={styles.icon} />,
@@ -54,12 +59,14 @@ function AdminSidebar() {
         <Newspaper className={styles.icon} />,
         <ContactMail className={styles.icon} />,
         <ReceiptLong className={styles.icon} />,
+        <Discount className={styles.icon}/>
     ];
     const staffFuncIcon = [
         <DirectionsCar className={styles.icon} />,
         <Group className={styles.icon} />,
         <ContactMail className={styles.icon} />,
         <ReceiptLong className={styles.icon} />,
+        <Discount className={styles.icon}/>
     ];
 
     let user = JSON.parse(localStorage.getItem("user"));
