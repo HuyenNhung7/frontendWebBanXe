@@ -10,6 +10,7 @@ import CustomerManagement from "./components/CustomerManagement";
 import EmployeeManagement from "./components/EmployeeManagement";
 import StaffRoute from "./components/routes/StaffRoute";
 import InvoiceManagement from "./components/InvoiceManagement";
+import PromotionManagement from "./components/PromotionManagement"
 
 function Admin() {
     const Item = styled(Paper)(({ theme }) => ({
@@ -70,6 +71,10 @@ function Admin() {
                             <Route
                                 path="/invoice-management"
                                 element={<InvoiceManagement />}
+                            />
+                            <Route
+                                path="/promotion-management"
+                                element={<PromotionManagement />}
                             />
                         </Routes>
                     </Item>

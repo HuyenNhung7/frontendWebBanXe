@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 
 import FormPopUp from "../FormPopUp";
-import HandleApiForm from "../../../../Apis/HandleApiForm";
+import HandleApiForm from "../../../../Apis2/HandleApiForm";
 import Swal from "sweetalert2";
 
 function FormManagement() {
@@ -72,26 +72,26 @@ function FormManagement() {
 
     useEffect(() => {
         HandleApiForm.getFormByPageIndex(pageIndex).then((res) => {
-            setData(res.forms);
-            setDataLength(res.totalForms);
+            setData(res.data);
+            setDataLength(res.totalForm);
         });
     }, [pageIndex]);
 
-    useEffect(() => {
-        // day
-        selectedDay
-            ? HandleApiForm.getFormByDate(Transform(selectedDay)).then(
-                  (res) => {
-                      setData(res.forms);
-                      setDataLength(res.totalForms);
-                  }
-              )
-            : HandleApiForm.getAllForm().then((res) => {
-                  setData(res.forms);
-                  setDataLength(res.totalForms);
-              });
-    }, [selectedDay]);
-    console.log(Transform(selectedDay));
+    // useEffect(() => {
+    //     // day
+    //     selectedDay
+    //         ? HandleApiForm.getFormByDate(Transform(selectedDay)).then(
+    //               (res) => {
+    //                   setData(res.forms);
+    //                   setDataLength(res.totalForms);
+    //               }
+    //           )
+    //         : HandleApiForm.getAllForm().then((res) => {
+    //               setData(res.forms);
+    //               setDataLength(res.totalForms);
+    //           });
+    // }, [selectedDay]);
+    // console.log(Transform(selectedDay));
     // handle event
     const handleDeleteItem = async (id) => {
         HandleApiForm.deleteForm(id)
@@ -106,7 +106,7 @@ function FormManagement() {
                     timer: 1500,
                 });
                 console.log(data);
-                setData(data.filter((item) => item._id !== id));
+                setData(data.filter((item) => item.id !== id));
             })
             .catch((err) => {
                 Swal.fire({
@@ -221,10 +221,10 @@ function FormManagement() {
                                     <Item>{index + 1}</Item>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Item>{item.name}</Item>
+                                    <Item>{item.tenNguoiGui}</Item>
                                 </Grid>
                                 <Grid item xs={1.5}>
-                                    <Item>{item.mobile}</Item>
+                                    <Item>{item.soDienThoai}</Item>
                                 </Grid>
                                 <Grid item xs={2}>
                                     <Item>{item.email}</Item>
@@ -246,9 +246,9 @@ function FormManagement() {
                                             color="error"
                                             onClick={() => {
                                                 // handleDeleteItem(item._id)
-                                                console.log(item._id);
+                                                console.log(item.id);
                                                 setOpenDeleteModal(true);
-                                                setId(item._id);
+                                                setId(item.id);
                                             }}
                                         >
                                             <DeleteOutline

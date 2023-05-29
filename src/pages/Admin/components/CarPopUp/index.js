@@ -26,6 +26,7 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
     const [year, setYear] = useState();
     const [size, setSize] = useState();
     const [quantity, setQuantity] = useState();
+    const [km, setKm] = useState();
     const [carCode, setCarCode] = useState();
 
     const inputId = [
@@ -108,7 +109,7 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
         "text",
         "text",
         "text",
-        "number",
+        "",
         "text",
         "number",
         "text",
@@ -143,25 +144,6 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
     ];
 
     // object data
-    const data = {
-        ten: carName,
-        thuonghieu: brand,
-        hinhanh: thumbnail,
-        gia: Number(price),
-        dongco: engine,
-        socho: Number(seat),
-        kichthuoc: size,
-        nguongoc: origin,
-        dungtich: capacity,
-        congsuatcucdai: power,
-        mausac: color,
-        tieuhaonhienlieu: fuel,
-        mota: desc,
-        namsanxuat: Number(year),
-        vantoctoida: speed,
-        soluong: Number(quantity),
-    };
-
     const data1 = {
         ten: carName,
         thuongHieu: brand,
@@ -174,7 +156,7 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
         tieuHaoNhienLieu: fuel,
         congSuatCucDai: power,
         mauSac: color,
-        giaXe: price,
+        giaXe: Number(price),
         hinhAnh: thumbnail,
         moTa: desc,
         namSanXuat: Number(year),
@@ -193,7 +175,7 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
 
     const handleCreateCar = async (e) => {
         e.preventDefault();
-        console.log(data1)
+        // console.log(data1[price], data1[seat])
         HandleApiXe.addXe(data1)
             .then(async (res) => {
                 await Swal.fire({
@@ -218,7 +200,7 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
     };
 
     const handleUpdateCar = async () => {
-        console.log(updateCar.id);
+        console.log(updateCar.id, data1.price);
         HandleApiXe.updateXe(updateCar.id, data1)
             .then(async (res) => {
                 await Swal.fire({
@@ -255,6 +237,9 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
             setOrigin(updateCar.nguonGoc);
             setSpeed(updateCar.vanTocToiDa);
             setQuantity(updateCar.soLuong);
+            if(updateCar.khuyenMai){
+                setKm(updateCar.khuyenMai.ten)
+            }
         }
     }, [updateCar]);
 
@@ -468,6 +453,9 @@ function CarPopup({ type, setType, updateCar, setUpdateCar }) {
                                     </Item>
                                     <Item>
                                         {"Số lượng xe: " + updateCar.soLuong}
+                                    </Item>
+                                    <Item>
+                                        {"Khuyến mãi: " + km||"Không có"}
                                     </Item>
                                     {/* </div> */}
                                 </Grid>

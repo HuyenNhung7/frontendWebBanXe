@@ -1,8 +1,9 @@
 import images from "../../../../assets/image";
-import styles from "./CarManagement.module.css";
-import "./CarManagement.css";
+import styles from "./Promotion.module.css";
+import "./Promotion.css";
 import HandleApiXe from "../../../../Apis2/HandleApiXe";
-import PromotionModal from "./PromotionModal";
+import HandleApiKhuyenMai from "../../../../Apis2/HandleApiKhuyenMai";
+
 import { styled } from "@mui/material/styles";
 import {
     Add,
@@ -11,7 +12,6 @@ import {
     ErrorOutline,
     DeleteOutline,
     Cancel,
-    Discount,
 } from "@mui/icons-material";
 import { useState, useEffect, memo, useRef } from "react";
 import {
@@ -30,7 +30,8 @@ import {
     Pagination,
 } from "@mui/material";
 
-import CarPopUp from "../CarPopUp";
+import PromotionPopUp from "../PromotionPopUp";
+import HandleApi from "../../../../Apis/HandleApi";
 import Swal from "sweetalert2";
 
 function CarManagement() {
@@ -41,25 +42,21 @@ function CarManagement() {
     const [searchValue, setSearchValue] = useState("");
     const [newData, setNewData] = useState([]);
     const [type, setType] = useState("");
-    const [updateCar, setUpdateCar] = useState({});
+    const [updatePromotion, setUpdatePromotion] = useState({});
     const [Id, setId] = useState(0);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const [isOpen, setIsOpen] = useState(false)
 
     let user = JSON.parse(localStorage.getItem("user"));
     const inputRef = useRef();
 
-    const gridColumn = [0.5, 0.9, 0.8, 1.8, 1.6, 1.8, 1.5, 1, 1.9];
+    const gridColumn = [0.5, 2.5, 1, 2, 2, 2];
     const gridTitle = [
         "STT",
-        "Ảnh",
-        "Mã xe",
-        "Tên xe",
-        "Thương hiệu",
-        "Giá",
-        "Số chỗ ngồi",
-        "Số lượng",
-        "",
+        "Tên khuyến mãi",
+        "Trị giá",
+        "Ngày bắt đầu",
+        "Ngày kết thúc",
+        "Còn hiệu lực",
     ];
 
     const valueSelect = [
@@ -76,137 +73,50 @@ function CarManagement() {
     const pageSize = 5;
 
     // Get API
-    useEffect(() => {
-        if (typeCar === "All") {
-            HandleApiXe.getXeByPageIndex(pageIndex).then((res) => {
-                setData(res.data);
-                setNewData(res.data);
-                setDataLength(res.totalXe);
-            });
-        } else {
-            HandleApiXe.getXeByBranch(pageIndex, typeCar).then((res) => {
-                setData(res.data);
-                setNewData(res.data);
-                setDataLength(res.totalXe);
-            });
-        }
-    }, [pageIndex, typeCar]);
+    // useEffect(() => {
+    //     if (typeCar === "All") {
+    //         HandleApiXe.getXeByPageIndex(pageIndex).then((res) => {
+    //             setData(res.data);
+    //             setNewData(res.data);
+    //             setDataLength(res.totalXe);
+    //         });
+    //     } else {
+    //         HandleApiXe.getXeByBranch(pageIndex, typeCar).then((res) => {
+    //             setData(res.data);
+    //             setNewData(res.data);
+    //             setDataLength(res.totalXe);
+    //         });
+    //     }
+    // }, [pageIndex, typeCar]);
 
     useEffect(() => {
-        HandleApiXe.getXeByPageIndex(0).then((res) => {
+        HandleApiKhuyenMai.getAllKM(pageIndex,5).then((res) => {
             console.log(res)
             setData(res.data);
             setNewData(res.data);
-            setDataLength(res.totalXe);
+            setDataLength(res.totalKM);
         });
     }, []);
 
-    // handle Filter select
     useEffect(() => {
-        // switch (typeCar) {
-        //     case "All":
-        //         setNewData(data);
-        //         HandleApi.getAllCar().then((res) => {
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     // case "All":
-        //     //     HandleApi.getCarByPageIndex(pageIndex).then((res) => {
-        //     //         setNewData(res.cars);
-        //     //         setDataLength(res.totalCars);
-        //     //     });
-        //     //     break;
-        //     case "Honda":
-        //         HandleApi.getCarByBrand("Honda").then((res) => {
-        //             setNewData(res.cars);
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     case "Toyota":
-        //         HandleApi.getCarByBrand("Toyota").then((res) => {
-        //             setNewData(res.cars);
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     case "Mercedes":
-        //         HandleApi.getCarByBrand("Mercedes").then((res) => {
-        //             setNewData(res.cars);
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     case "Vinfast":
-        //         HandleApi.getCarByBrand("Vinfast").then((res) => {
-        //             setNewData(res.cars);
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     case "Kia":
-        //         HandleApi.getCarByBrand("Kia").then((res) => {
-        //             setNewData(res.cars);
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     case "BMW":
-        //         HandleApi.getCarByBrand("BMW").then((res) => {
-        //             setNewData(res.cars);
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     case "Ford":
-        //         HandleApi.getCarByBrand("Ford").then((res) => {
-        //             setNewData(res.cars);
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     case "Hyundai":
-        //         HandleApi.getCarByBrand("Hyundai").then((res) => {
-        //             setNewData(res.cars);
-        //             setDataLength(res.totalCarsFilter);
-        //         });
-        //         break;
-        //     default:
-        //         break;
-        // }
-        if (typeCar !== "All") {
-            setNewData(
-                data.filter((item) => {
-                    return item.thuongHieu == typeCar;
-                })
-            );
-            setPageIndex(0);
-        }
-        else setNewData(data);
-        if (searchValue.trim() !== "") {
-            HandleApiXe.getXeByBranch(pageIndex, searchValue.trim()).then(async (res) => {
-                await setNewData(res.data);
-                await setDataLength(res.totalXe);
-            });
-        }
-        setPageIndex(0);
-        console.log("page: ", pageIndex);
-    }, [typeCar, searchValue]);
+        HandleApiKhuyenMai.getAllKM(pageIndex,5).then((res) => {
+            console.log(res)
+            setData(res.data);
+            setNewData(res.data);
+            setDataLength(res.totalKM);
+        });
+    }, [pageIndex]);
 
-    // handle event
-    // const handleChange = (event) => {
-    //     setTypeCar(event.target.value);
-    // };
-
-    const handleChange = (e) => {
-        if (e.target.value !== "Tất cả") setTypeCar(e.target.value);
-        else {
-            setTypeCar(e.target.value);
-        }
-    };
 
     const handleDeleteItem = async (id) => {
-        HandleApiXe.deleteXe(id)
+        HandleApiKhuyenMai.deleteKM(id)
             .then((res) => {
                 console.log(id);
                 setOpenDeleteModal(false);
                 Swal.fire({
                     position: "center",
                     icon: "success",
-                    title: "Xóa dữ liệu xe thành công!",
+                    title: "Xóa mã khuyến mãi thành công!",
                     showConfirmButton: false,
                     timer: 1500,
                 });
@@ -218,7 +128,7 @@ function CarManagement() {
                 Swal.fire({
                     position: "center",
                     icon: "error",
-                    title: "Xóa xe thất bại!",
+                    title: "Xóa mã khuyến mãi thất bại!",
                     showConfirmButton: false,
                     timer: 1500,
                 });
@@ -227,12 +137,12 @@ function CarManagement() {
 
     const handleClickUpdate = async (id) => {
         console.log(id);
-        HandleApiXe.getXeById(id)
+        HandleApiKhuyenMai.getKMById(id)
             .then(async (res) => {
                 console.log(res)
-                await setUpdateCar(res);
+                await setUpdatePromotion(res);
                 await setType("update");
-                console.log(updateCar);
+                console.log(updatePromotion);
             })
             .catch((err) => {
                 console.log(err);
@@ -240,9 +150,9 @@ function CarManagement() {
     };
 
     const handleReadInfo = async (id) => {
-        HandleApiXe.getXeById(id)
+        HandleApiKhuyenMai.getKMById(id)
             .then(async (res) => {
-                await setUpdateCar(res);
+                await setUpdatePromotion(res);
                 await setType("read");
             })
             .catch((err) => {
@@ -271,14 +181,14 @@ function CarManagement() {
     // }, [searchValue]);
     // console.log("length: ", dataLength);
 
-    const handleInputChange = (e) => {
-        setSearchValue(e.target.value);
-    };
+    // const handleInputChange = (e) => {
+    //     setSearchValue(e.target.value);
+    // };
 
-    const handleClear = () => {
-        setSearchValue("");
-        inputRef.current.focus();
-    };
+    // const handleClear = () => {
+    //     setSearchValue("");
+    //     inputRef.current.focus();
+    // };
 
     const handleErrorInform = () => {
         Swal.fire({
@@ -353,7 +263,7 @@ function CarManagement() {
                     className={styles.header_image}
                     alt="Header img"
                 />
-                <h1 className={styles.header_heading}>Quản lý ô tô</h1>
+                <h1 className={styles.header_heading}>Quản lý khuyến mãi</h1>
             </header>
             <div className={styles.container}>
                 <div className={styles.container_header}>
@@ -363,15 +273,15 @@ function CarManagement() {
                                 ref={inputRef}
                                 value={searchValue}
                                 type="text"
-                                placeholder="Tìm kiếm xe"
+                                placeholder="Tìm kiếm khuyến mãi"
                                 spellCheck={false}
-                                onChange={handleInputChange}
+                                // onChange={handleInputChange}
                             />
 
                             {!!searchValue && (
                                 <button
                                     className={styles.clear}
-                                    onClick={handleClear}
+                                    // onClick={handleClear}
                                 >
                                     <Cancel className={styles.clearIcon} />
                                 </button>
@@ -384,48 +294,6 @@ function CarManagement() {
                                 <Search className={styles.searchIcon} />
                             </button>
                         </div>
-                        <FormControl
-                            className={styles.filter}
-                            sx={{ m: 1, minWidth: 220, height: 44 }}
-                            size="medium"
-                        >
-                            <InputLabel
-                                sx={{
-                                    fontSize: "14px",
-                                    fontWeight: "600",
-                                    left: "10px",
-                                }}
-                                id="input-label"
-                            >
-                                Hãng xe
-                            </InputLabel>
-                            <Select
-                                className={styles.filter_wrap}
-                                labelId="input--"
-                                label="typecar"
-                                defaultValue={typeCar}
-                                value={typeCar}
-                                MenuProps={MenuSelectProps}
-                                onChange={handleChange}
-                            >
-                                <MenuItem
-                                    className={styles.menuItem}
-                                    value="All"
-                                    selected
-                                >
-                                    Tất cả
-                                </MenuItem>
-                                {valueSelect.map((item, index) => (
-                                    <MenuItem
-                                        key={index}
-                                        value={item}
-                                        className={styles.menuItem}
-                                    >
-                                        {item}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
                     </div>
 
                     {user.role !== "employee" ? (
@@ -443,7 +311,7 @@ function CarManagement() {
                                 setType("create");
                             }}
                         >
-                            Thêm sản phẩm
+                            Thêm mã khuyến mãi
                         </Button>
                     ) : (
                         ""
@@ -466,49 +334,27 @@ function CarManagement() {
                                 <Grid item xs={0.5}>
                                     <Item>{index + 1}</Item>
                                 </Grid>
-                                <Grid item xs={0.9}>
+                                <Grid item xs={2.5}>
                                     <Item>
-                                        <img
-                                            src={item.hinhAnh}
-                                            className={styles.content_image}
-                                            alt="Car"
-                                        />
+                                        {item.ten}
                                     </Item>
-                                </Grid>
-                                <Grid item xs={0.8}>
-                                    <Item>{item.id}</Item>
-                                </Grid>
-                                <Grid item xs={1.8}>
-                                    <Item>{item.ten}</Item>
-                                </Grid>
-                                <Grid item xs={1.6}>
-                                    <Item>{item.thuongHieu}</Item>
-                                </Grid>
-                                <Grid item xs={1.8}>
-                                    <Item>
-                                        {item.giaXe.toLocaleString() + " VNĐ"}
-                                    </Item>
-                                </Grid>
-                                {/* <Grid item xs={2.4}>
-                                    <Item>{item.dongco}</Item>
-                                </Grid> */}
-                                <Grid item xs={1.5}>
-                                    <Item>{item.soCho}</Item>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Item>{item.soLuong}</Item>
+                                    <Item>{item.triGiaKM}</Item>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Item>{item.ngayBD}</Item>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Item>{item.ngayKT}</Item>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Item>{item.conHieuLuc?"Đúng":"Không còn"}
+                                    </Item>
                                 </Grid>
                                 <Grid item xs={1.9}>
                                     {/* Update, delete button */}
                                     <Item>
-                                        <IconButton
-                                            onClick={()=>{
-                                                setId(item.id);
-                                                console.log(item.id)
-                                                setIsOpen(true);
-                                            }}>
-                                            <Discount/>
-                                        </IconButton>
                                         <Button
                                             variant="outlined"
                                             size="large"
@@ -575,8 +421,7 @@ function CarManagement() {
                                                     color="#d32f2f"
                                                     textAlign="center"
                                                 >
-                                                    Bạn có chắc chắn muốn xóa dữ
-                                                    liệu xe này?
+                                                    Bạn có chắc chắn muốn xóa mã khuyến mãi này?
                                                 </Typography>
                                                 <Typography
                                                     id="modal-modal-description"
@@ -643,16 +488,12 @@ function CarManagement() {
                     </Stack>
                 </div>
             </div>
-            <CarPopUp
+            <PromotionPopUp
                 type={type !== "" ? type : ""}
                 setType={setType}
-                updateCar={updateCar}
-                setUpdateCar={setUpdateCar}
+                updatePromotion={updatePromotion}
+                setUpdatePromotion={setUpdatePromotion}
             />
-
-            {Id!==0}?<PromotionModal Id={Id}
-                            isOpen={isOpen}
-                            setIsOpen={setIsOpen}/>
         </div>
     );
 }

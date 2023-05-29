@@ -1,6 +1,7 @@
 import { useState} from 'react';
 import style from './Contact.module.css'
-import HandleApiForm from '../../Apis/HandleApiForm';
+// import HandleApiForm from '../../Apis/HandleApiForm';
+import HandleApiForm from '../../Apis2/HandleApiForm';
 import Swal from "sweetalert2";
 
 function checkEmailFormat(email) {
@@ -9,9 +10,9 @@ function checkEmailFormat(email) {
 }
 
 function Contact() {
-    const [name, setName]=useState("");
+    const [tenNguoiGui, setTenNguoiGui]=useState("");
     const [email, setEmail]=useState("");
-    const [mobile, setMobile]=useState("");
+    const [soDienThoai, setSoDienThoai]=useState("");
     const [message, setMessage]=useState("");
     const[errorMobile, setErrorMobile]=useState("");
     const[errorEmail, setErrorEmail]=useState("");
@@ -29,9 +30,10 @@ function Contact() {
             });
         }
         else{
-            const data={name,email,mobile,message }
+            const data={tenNguoiGui,email,soDienThoai,message }
             try {
-              const formData= await HandleApiForm.createForm(data)
+                console.log(data);
+              const formData= await HandleApiForm.addForm(data)
               if(!formData){
                 Swal.fire({
                     position: "center",
@@ -51,9 +53,9 @@ function Contact() {
                 showConfirmButton: false,
                 timer: 3000,
                 });
-              setName("")
+              setTenNguoiGui("")
               setEmail("")
-              setMobile("")
+              setSoDienThoai("")
               setMessage("")
             } catch (error) {
                 console.log(error)
@@ -71,7 +73,7 @@ function Contact() {
     const handleChange=function(e){
         if(e.target.type==="text")
         {
-            setName(e.target.value);
+            setTenNguoiGui(e.target.value);
         }
         if(e.target.type==="email")
         {
@@ -79,7 +81,7 @@ function Contact() {
         }
         if(e.target.type==="tel")
         {
-            setMobile(e.target.value);
+            setSoDienThoai(e.target.value);
         }
         if(e.target.className==="textarea")
         {
@@ -122,7 +124,7 @@ function Contact() {
                     <form onSubmit={handleSubmit}>
                         <div className={style.contactItem}>
                             <label className={style.contactLabel}>Họ và tên</label>
-                            <input  className={style.contactInput} type={"text"} required  onBlur={handleBlur} onChange={handleChange} value={name}></input>
+                            <input  className={style.contactInput} type={"text"} required  onBlur={handleBlur} onChange={handleChange} value={tenNguoiGui}></input>
                         </div>
                         <div className={style.contactItem}>
                             <label className={style.contactLabel} style={{marginTop: "10px"}}>Email</label>
@@ -131,7 +133,7 @@ function Contact() {
                         </div>
                         <div className={style.contactItem}>
                             <label className={style.contactLabel}>Số điện thoại</label>
-                            <input className={style.contactInput} type={"tel"} required  onBlur={handleBlur} onChange={handleChange} value={mobile}></input>
+                            <input className={style.contactInput} type={"tel"} required  onBlur={handleBlur} onChange={handleChange} value={soDienThoai}></input>
                             <p style={{color: "red", padding: "4px"}}>{errorMobile}</p>
                         </div>
                         <div className={style.contactItem}>
