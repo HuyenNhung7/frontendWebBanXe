@@ -47,21 +47,27 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
     const [inputMaXe, setInputMaXe] = useState('')
     const [inputSL, setInputSL] = useState('')
     var user = JSON.parse(localStorage.getItem('user'));
-    const manv = user.mauser;
+    const manv = user.id;
     const ngayhd = formatDate(new Date());
 
 
     //-----------------------------------
-
+    function convertCarInfoToNewFormat(id, soLuong, tenXe, gia) {
+        const xe = { id:parseInt(id)};
+        const newXeInfo = { maxe: id, xe, soLuong:parseInt(soLuong), tenXe, soLuong:parseInt(soLuong), gia:parseInt(gia) };
+        return newXeInfo;
+      }
     const dataN = {
-        hoadon: {
-            manv: manv,
-            makh: makh,
-            ngayhd: ngayhd,
-            tinhtrang: tinhtrang,
-            trigia: tongtien,  
-    },
-        cthd: carArrayData,
+            us2:{
+                id:parseInt(makh)
+            },
+            us3:{
+                id:manv
+            },
+            ngayHD: ngayhd,
+            tinhTrang: tinhtrang,
+            triGia: tongtien,  
+        cthds: carArrayData,
     }
 
     
@@ -77,7 +83,7 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
         {
             HandleApiInvoice.getCarByMaCar(maxe).then((res) => {
                 console.log(res)
-                if(res.totalCarsFilter === 0)
+                if(res === null)
                 Swal.fire({
                     position: "center",
                     icon: "error",
@@ -117,7 +123,7 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
         {
             HandleApiInvoice.getCarByMaCar(maxe).then((res) => {
                 console.log(res)
-                if(res.cars[0].soluong < soluongxe)
+                if(res.soLuong < soluongxe)
                 Swal.fire({
                     position: "center",
                     icon: "error",
@@ -148,7 +154,7 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
         if(makh !== null && makh !== '')
         {
             HandleApiInvoice.getCustomerByMaUser(makh).then((res) => {
-                if(res.totalCustomersFilter === 0)
+                if(res.data === null)
                 Swal.fire({
                     position: "center",
                     icon: "error",
@@ -173,19 +179,21 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
     const handleAddCarToInvoice = async (e) => {
         e.preventDefault();
         HandleApiInvoice.getCarByMaCar(maxe).then( (res) => {
-            if(res.totalCarsFilter > 0 && res.cars[0].soluong > soluongxe)
+            if(res!= null && res.soLuong >= soluongxe)
             { 
-                if(res.cars[0].soluong >= soluongxe)
-                setTongTien(tongtien+res.cars[0].gia*soluongxe)
+                if(res.soLuong >= soluongxe)
+                setTongTien(tongtien+res.giaXe*soluongxe)
                 let carInforDisplay = {
-                    tenxe: res.cars[0].ten,
+                    tenxe: res.ten,
                     soluong: soluongxe, 
-                    dongia: res.cars[0].gia,
+                    dongia: res.giaXe,
                 }
-                let carData = {
+                /*let carData = {
                     macar: maxe,
                     soluong: soluongxe,
-                }
+                }*/
+                let carData =convertCarInfoToNewFormat(maxe,soluongxe,res.ten,res.giaXe)
+                
                 setCarArrayData(carArrayData => [...carArrayData, carData])
                 setCarArrayDisplay(carArrayDisplay => [...carArrayDisplay, carInforDisplay])
                 setMaXe(null)
@@ -232,6 +240,7 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
             setMaXe(null)
             setCarArrayDisplay([])
             setCarArrayData([])
+            console.log(dataN);
     };
 
     const MenuSelectProps = {
@@ -369,14 +378,14 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
                                                 >
                                                     <MenuItem
                                                         className={styles.menuItem}
-                                                        value="Chưa thanh toán"
+                                                        value="Chua Thanh Toan"
                                                         selected
                                                     >
                                                         Chưa thanh toán
                                                     </MenuItem>
                                                     <MenuItem
                                                         className={styles.menuItem}
-                                                        value="Đã thanh toán"
+                                                        value="Da Thanh Toan"
                                                     >
                                                         Đã thanh toán
                                                     </MenuItem>
@@ -491,12 +500,12 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
                             <Grid container columnSpacing={5}>
                                 <Grid item xs={4.5}>
                                     <div className={styles.infor_hoadon}>
-                                    <Item sx={{ fontWeight: "bold" }}>{"Mã khách hàng: " + updateInvoice.hoadon.makh}</Item>
-                                    <Item>{"Tên khách hàng: " + updateInvoice.hoadon.tenkh}</Item>
-                                    <Item>{"Mã nhân viên: " + updateInvoice.hoadon.manv}</Item>
-                                    <Item>{"Mã đơn hàng " + updateInvoice.hoadon.mahd}</Item>
-                                    <Item>{"Tình trạng: " + updateInvoice.hoadon.tinhtrang}</Item>
-                                    <Item>{"Ngày lập hóa đơn: " + updateInvoice.hoadon.ngayhd}</Item>
+                                    <Item sx={{ fontWeight: "bold" }}>{"Mã khách hàng: " + updateInvoice.data.us2.id}</Item>
+                                    <Item>{"Tên khách hàng: " + updateInvoice.data.us2.username}</Item>
+                                    <Item>{"Mã nhân viên: " + updateInvoice.data.us2.id}</Item>
+                                    <Item>{"Mã đơn hàng " + updateInvoice.data.id}</Item>
+                                    <Item>{"Tình trạng: " + updateInvoice.data.tinhtrang}</Item>
+                                    <Item>{"Ngày lập hóa đơn: " + updateInvoice.data.ngayHD}</Item>
                                     </div>
                                 </Grid>
                                 <Grid item xs={7.5}>
@@ -517,19 +526,19 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
                                 <Grid item xs={12} >
                                 <div style={{height: "157px", overflowY: 'scroll', overflow: 'scroll'}}>
                                     <Box component="div">
-                                    {updateInvoice.cthds?.map((item, index) => (
+                                    {updateInvoice.data.detailOrders?.map((item, index) => (
                                             <Grid container key={index}>
                                                 <Grid item xs={1}>
                                                     <Item>{index + 1}</Item>
                                                 </Grid>
                                                 <Grid item xs={5.7}>
-                                                    <Item>{item.tenxe}</Item>
+                                                    <Item>{item.xedto.tenxe}</Item>
                                                 </Grid>
                                                 <Grid item xs={1.8}>
-                                                    <Item>{item.soluong}</Item>
+                                                    <Item>{item.soLuong}</Item>
                                                 </Grid>
                                                 <Grid item xs={3.5}>
-                                                <Item>{item.gia.toLocaleString() + " VNĐ"}</Item>
+                                                <Item>{item.id.toLocaleString() + " VNĐ"}</Item>
                                                 </Grid>
                                             </Grid>))}
                                     </Box>
@@ -541,8 +550,8 @@ function InvoicePopUp({type, setType, updateInvoice, setUdateInvoice}) {
                                     <Grid item xs={6} sx={{height: "93px"}}>
                                         <Box>
                                             <Typography variant="h4" 
-                                            color ={(updateInvoice.hoadon.tinhtrang==="Chưa thanh toán") ? "error" : "#4caf50"}>
-                                                {updateInvoice.hoadon.trigia.toLocaleString() + " VNĐ"}
+                                            color ={(updateInvoice.data.tinhtrang==="Chua Thanh Toan") ? "error" : "#4caf50"}>
+                                                {updateInvoice.data.trigia.toLocaleString() + " VNĐ"}
                                             </Typography>
                                         </Box>
                                     </Grid>

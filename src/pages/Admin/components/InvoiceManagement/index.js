@@ -63,16 +63,17 @@ function InvoiceManagement() {
     ];
 
     const valueSelectN = [
-        "Đã thanh toán",
-        "Chưa thanh toán",
+        "Da Thanh Toan",
+        "Chua Thanh Toan",
     ]
 
-    const pageSize = 10;
+    const pageSize = 6;
     
     useEffect(() => {
         HandleApiInvoice.getInvoiceByPageIndex(pageIndex).then((res) => {
-            setData(res.hoadons);
-            setDataLength(res.totalHoaDon);
+            setData(res.lst);
+            setDataLength(res.count);
+            console.log(res);
         })
     },[pageIndex]);
     // handle Filter select
@@ -81,20 +82,24 @@ function InvoiceManagement() {
         {
             case "Tất cả":
                 setNewData(data);
-                HandleApiInvoice.getInvoiceByTinhTrang("",pageIndex).then((res) => {
-                setDataLength(res.totalHoaDon)
+                HandleApiInvoice.getInvoiceByPageIndex(pageIndex).then((res) => {
+                    setData(res.lst);
+                    setDataLength(res.count);
+                    //console.log(res);
+                })
+                break;
+            case "Da Thanh Toan":
+                    HandleApiInvoice.getInvoiceByTinhTrang("Da Thanh Toan",pageIndex).then((res) => {
+                        setNewData(res.lst);
+                        setDataLength(res.count);
+                        console.log(res);
                 });
                 break;
-            case "Đã thanh toán":
-                    HandleApiInvoice.getInvoiceByTinhTrang("Đã thanh toán",pageIndex).then((res) => {
-                    setNewData(res.hoadons)
-                    setDataLength(res.totalHoaDon)
-                });
-                break;
-            case "Chưa thanh toán":
-                HandleApiInvoice.getInvoiceByTinhTrang("Chưa thanh toán",pageIndex).then((res) => {
-                    setNewData(res.hoadons)
-                    setDataLength(res.totalHoaDon)
+            case "Chua Thanh Toan":
+                HandleApiInvoice.getInvoiceByTinhTrang("Chua Thanh Toan",pageIndex).then((res) => {
+                    setNewData(res.lst);
+                    setDataLength(res.count);
+                    console.log(res);
                 });
                 break;
             default:
@@ -105,7 +110,7 @@ function InvoiceManagement() {
 
     //function dùng để kiểm tra ...
     function isDonDatHang(tinhtrang){
-        if(tinhtrang==="Chưa thanh toán")
+        if(tinhtrang==="Chua Thanh Toan")
         return true
         else
         return false
@@ -141,7 +146,7 @@ function InvoiceManagement() {
     };
 
     const handleClickUpdate = async (id) => {
-        HandleApiInvoice.capnhatTinhTrang(id, updateData)
+        HandleApiInvoice.capnhatTinhTrang(id, "999")
             .then(async (res) => {
                 setOpenEditModal(false);
                 Swal.fire({
@@ -171,6 +176,7 @@ function InvoiceManagement() {
             .then(async (res) => {
                 await setUpdateInvoice(res);
                 await setType("read");
+                console.log(res);
             })
             .catch((err) => {
                 console.log(err);
@@ -359,13 +365,13 @@ function InvoiceManagement() {
                                     <Item>{index + 1}</Item>
                                 </Grid>
                                 <Grid item xs={1.5}>
-                                    <Item>{item.mahd}</Item>
+                                    <Item>{item.id}</Item>
                                 </Grid>
                                 <Grid item xs={1.7}>
-                                    <Item>{item.makh}</Item>
+                                    <Item>{item.us2.id}</Item>
                                 </Grid>
                                 <Grid item xs={1.8}>
-                                    <Item>{item.ngayhd}</Item>
+                                    <Item>{item.ngayHD}</Item>
                                 </Grid>
                                 <Grid item xs={1.8}>
                                     <Item>{item.tinhtrang}</Item>
@@ -384,7 +390,7 @@ function InvoiceManagement() {
                                                 marginRight: "10px",
                                             }}
                                             onClick={() =>
-                                                handleReadInfo(item._id)
+                                                handleReadInfo(item.id)
                                             }
                                         >
                                             Chi tiết
@@ -434,7 +440,7 @@ function InvoiceManagement() {
                                                         variant="contained"
                                                         color="success"
                                                         onClick={() =>
-                                                            handleClickUpdate(Id)
+                                                            handleClickUpdate(item.id)
                                                         }
                                                         sx={{
                                                             fontSize: "14px",
@@ -467,7 +473,7 @@ function InvoiceManagement() {
                                             color="error"
                                             onClick={() => {
                                                 setOpenDeleteModal(isDonDatHang(item.tinhtrang));
-                                                setId(item._id);
+                                                setId(item.id);
                                             }}
                                         >
                                             <DeleteOutline
@@ -509,7 +515,7 @@ function InvoiceManagement() {
                                                         variant="contained"
                                                         color="error"
                                                         onClick={() =>
-                                                            handleDeleteItem(Id)
+                                                            handleDeleteItem(item.id)
                                                         }
                                                         sx={{
                                                             fontSize: "14px",

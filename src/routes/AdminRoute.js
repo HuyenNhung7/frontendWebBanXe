@@ -6,9 +6,11 @@ function AdminRoute({children}) {
     const token = Cookies.get("token");
     return ( 
         <div>
-            {(token && !!user && ((user.role === "admin" || user.role === "employee"))) ? children : <Navigate to="/" /> } 
+            {children}
         </div>
      );
 }
 
 export default AdminRoute;
+
+//{(token && !!user && ((user.role === "admin" || user.role === "employee"))) ? children : <Navigate to="/" /> } 

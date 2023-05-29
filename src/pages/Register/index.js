@@ -136,8 +136,8 @@ const Register = () => {
     */
       const sendRequestSU = async ()=>{
         const res = await axios
-        .post(`https://showroomcar104.onrender.com/users`,{
-          name:String(inputs.name),
+        .post(`http://localhost:9090/api/v1/user/register`,{
+          username:String(inputs.name),
           email:String(inputs.email),
           password:String(inputs.password)
         })
@@ -160,9 +160,9 @@ const Register = () => {
           e.preventDefault();
           sendRequestSU()
           .then((data)=>{
-            localStorage.setItem("user",JSON.stringify(data.user));
+            localStorage.setItem("user",JSON.stringify(data.data));
             //localStorage.setItem("token",data.token);
-            Cookies.set('token', data.token);
+            Cookies.set('token', data.data.token);
           })
           .then(()=>{const id = localStorage.getItem("userId"); console.log(id);})
           .then(()=>navigate("/"));

@@ -19,7 +19,7 @@ const DetailOrder = ({item}) => {
         1,2,3,4,2
     ]
     const authAxios = axios.create({
-        baseURL: 'https://showroomcar104.onrender.com',
+        baseURL: 'http://localhost:9090/hd',
         headers:{
           Authorization:`Bearer ${token}`
         }
@@ -27,30 +27,32 @@ const DetailOrder = ({item}) => {
       const sendRequestSU = async ()=>{
         if(item){
         const res = await authAxios
-        .get(`/hoadons/${item._id}`)
+        .get(`/${item.id}`)
         .catch((err)=>console.log(err))
-        const data = await res.data;
+        const data = await res.data.data;
         console.log(data);
         return data;}
       }
       const getCar = async(macar)=>{
         const res = await axios
-        .get(`https://showroomcar104.onrender.com/cars?macar=${macar}`)
+        .get(`http://localhost:9090/api/v1/xe/${macar}`)
         .catch((err)=>console.log(err))
-        const data = await res.data.cars[0];
+        const data = await res.data;
         await console.log( data);
         return data;
       }
 
       useEffect(()=>{
+        
+        console.log(item);
         setDetail();
         setCar([]);
         sendRequestSU()
         .then((data)=>{
           setDetail(data);
-          setfirst(data.cthds.length)
-          {data.cthds.map((items,index)=>{
-              getCar(items.macar)
+          setfirst(data.detailOrders.length)
+          {data.detailOrders.map((items,index)=>{
+              getCar(items.xedto.id)
               .then((data)=>setCar(prev=>[...prev,data]))
           })};
         })
@@ -71,10 +73,10 @@ const DetailOrder = ({item}) => {
       
       */
   const checkExist = (ma) =>{
-    for(let i=0;i<detail.cthds.length;i++)
+    for(let i=0;i<detail.detailOrders.length;i++)
     {
-      if(detail.cthds[i].macar==ma)
-      return detail.cthds[i].soluong;
+      if(detail.detailOrders[i].xedto.id==ma)
+      return detail.detailOrders[i].soLuong;
         /*console.log(detail.cthds[i].macar);
         console.log(ma);*/
     }
@@ -86,14 +88,14 @@ const DetailOrder = ({item}) => {
     return 0;
   }
 
-  const hienthi =car.length!==0? car.filter((item,index)=>{
-    if (detail && checkExist(item.macar)!=0){
+  /*const hienthi =car.length!==0? car.filter((item,index)=>{
+    if (detail && checkExist(item.detailOrders.xedto.id)!=0){
       
-        item.sl = checkExist(item.macar)
+        item.sl = checkExist(item.detailOrders.xedto.id)
         return true
     }
-  }) : false
-  console.log(hienthi);
+  }) : true
+  console.log(hienthi);*/
   console.log(detail? checkExist('OT6'):"chuaco");
   
   return (
@@ -103,19 +105,19 @@ const DetailOrder = ({item}) => {
     </div>
     {(detail)? <><div className={classes.ListInfo}>
       <div>
-       <p>ID hóa đơn:</p><p> {detail.hoadon.mahd}</p>
+       <p>ID hóa đơn:</p><p> {detail.id}</p>
       </div>
       <div>
-       <p>Ngày hóa đơn:</p><p> {detail.hoadon.ngayhd}</p>
+       <p>Ngày hóa đơn:</p><p> {detail.ngayHD}</p>
        </div>
        <div>
-       <p>Mã khách hàng: </p><p>{detail.hoadon.makh}</p>
+       <p>Mã khách hàng: </p><p>{detail.us2.id}</p>
        </div>
        <div>
-       <p>Mã nhân viên: </p><p>{detail.hoadon.manv}</p>
+       <p>Mã nhân viên: </p><p>{detail.us2.id}</p>
        </div>
        <div>
-       <p>Tình trạng: </p><p>{detail.hoadon.tinhtrang}</p>
+       <p>Tình trạng: </p><p>{detail.tinhtrang}</p>
        </div>
        <p>Danh sách xe: </p>
        <div>
@@ -134,8 +136,8 @@ const DetailOrder = ({item}) => {
         </Grid>
       ))}
     </Grid>
-    <div style={ detail.cthds.length>4?{height:"410px",width:"100%"}:{width:"100%"}} className={classes.Overcar}>
-       {hienthi && hienthi.reverse().map((dt,index)=>
+    <div style={ detail.detailOrders.length>4?{height:"410px",width:"100%"}:{width:"100%"}} className={classes.Overcar}>
+       {car && car.reverse().map((dt,index)=>
        
         <Grid container sx={index%2==0? { padding: '20px 0', backgroundColor:"white",color:"black"} : { padding: '20px 0', backgroundColor:"ButtonHighlight",color:"#8a0000"} }
         key={index} >
@@ -143,16 +145,16 @@ const DetailOrder = ({item}) => {
             <p  style={{textAlign:"center", width:"100%"}}>{index+1}</p>
           </Grid>
         <Grid item xs={2} style={{textAlign:"center"}}>
-            <img src={dt.hinhanh? dt.hinhanh:""} alt="car"/>
+            <img src={dt.hinhanh? dt.hinhAnh:""} alt="car"/>
         </Grid>
        <Grid item xs={3}>
           <p  style={{textAlign:"center", width:"100%"}}>{dt.ten? dt.ten :""}</p>
         </Grid>
         <Grid item xs={4}>
-          <p  style={{textAlign:"center", width:"100%"}}>{dt.gia? parseInt(dt.gia).toLocaleString() : ""}</p>
+          <p  style={{textAlign:"center", width:"100%"}}>{dt.giaXe? parseInt(dt.giaXe).toLocaleString() : ""}</p>
       </Grid>
         <Grid item xs={2}>
-          <p  style={{textAlign:"center", width:"100%"}}>{dt.sl? dt.sl :""}</p>
+          <p  style={{textAlign:"center", width:"100%"}}>{item.detailOrders[index].soLuong? item.detailOrders[index].soLuong :""}</p>
       </Grid>
       </Grid>
       )}
@@ -161,7 +163,7 @@ const DetailOrder = ({item}) => {
       </Grid>
       </div>
        <div className={classes.TotalDiv}>
-       <p>Trị giá hóa đơn:</p><p className={classes.Total}> { parseInt(detail.hoadon.trigia).toLocaleString()} vnd</p>
+       <p>Trị giá hóa đơn:</p><p className={classes.Total}> { parseInt(detail.trigia).toLocaleString()} vnd</p>
        </div>
     </div></>:<p style={{textAlign:"center"}}>Chọn 1 hóa đơn để xem chi tiết</p>}
   </div>

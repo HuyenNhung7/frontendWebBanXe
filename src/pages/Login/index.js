@@ -54,7 +54,7 @@ const Login = () => {
             }
         }
         if (e.target.type === "password") {
-            if (e.target.value.length < 8 || e.target.value === "") {
+            if (e.target.value.length < 1 || e.target.value === "") {
                 e.target.style.borderColor = "red";
                 setErrors((prev) => {
                     return {
@@ -75,7 +75,7 @@ const Login = () => {
     };
     const sendRequestSU = async () => {
         const res = await axios
-            .post(`https://showroomcar104.onrender.com/users/login`, {
+            .post(`http://localhost:9090/api/v1/user/login`, {
                 email: String(inputs.email),
                 password: String(inputs.password),
             })
@@ -98,9 +98,9 @@ const Login = () => {
             e.preventDefault();
             sendRequestSU()
                 .then((data) => {
-                    localStorage.setItem("user", JSON.stringify(data.user));
-                    //localStorage.setItem("token",data.token);
-                    Cookies.set("token", data.token, {
+                    localStorage.setItem("user", JSON.stringify(data.data));
+                    //localStorage.setItem("token",data.data.token);
+                    Cookies.set("token",data.data.token, {
                         expires: 30,
                     });
                 })

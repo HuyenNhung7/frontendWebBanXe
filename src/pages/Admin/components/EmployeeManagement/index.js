@@ -56,8 +56,9 @@ function EmployeeManagement() {
     useEffect(() => {
         HandleApiEmployee.getEmployeeByPageIndex(pageIndex)
         .then((res) => {
-            setData(res.employees);
-            setDataLength(res.totalEmployees);
+            setData(res.lst);
+            setDataLength(res.total);
+            console.log(data);
         });
     }, [pageIndex]);
 
@@ -92,7 +93,7 @@ function EmployeeManagement() {
         console.log(id);
         HandleApiEmployee.getEmployeeById(id)
             .then(async (res) => {
-                await setUpdateEmployee(res);
+                await setUpdateEmployee(res.data);
                 await setType("update");
                 console.log(updateEmployee);
             })
@@ -105,7 +106,7 @@ function EmployeeManagement() {
     const handleReadInfo = async (id) => {
         HandleApiEmployee.getEmployeeById(id)
             .then(async (res) => {
-                await setUpdateEmployee(res);
+                await setUpdateEmployee(res.data);
                 await setType("read");
                 console.log(updateEmployee);
             })
@@ -124,14 +125,14 @@ function EmployeeManagement() {
         if (searchValue.trim() !== "") {
             HandleApiEmployee.getEmployeeBySearch(searchValue.toUpperCase())
             .then(async (res) => {
-                await setData(res.employees);
-                await setDataLength(data.length);
+                await setData(res.lst);
+                await setDataLength(res.total);
             });
         } else {
             HandleApiEmployee.getEmployeeByPageIndex(pageIndex)
             .then((res) => {
-                setData(res.employees);
-                setDataLength(res.totalEmployees);
+                setData(res.lst);
+                setDataLength(res.total);
             });
         }
     }, [searchValue]);
@@ -246,10 +247,10 @@ function EmployeeManagement() {
                                     <Item>{index + 1}</Item>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Item>{item.mauser}</Item>
+                                    <Item>{item.id}</Item>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Item>{item.name}</Item>
+                                    <Item>{item.username}</Item>
                                 </Grid>
                                 <Grid item xs={1}>
                                     <Item>{item.gioitinh}</Item>
@@ -264,13 +265,13 @@ function EmployeeManagement() {
                                 <Grid item xs={3}>
                                     <Item>
                                         <Button variant="outlined" size="small" sx={{ fontSize: "10px", marginRight: "12px" }}
-                                            onClick={() => handleReadInfo(item._id)} >Chi tiết</Button>
+                                            onClick={() => handleReadInfo(item.id)} >Chi tiết</Button>
                                         <IconButton
                                             color="primary"
                                             size="medium"
                                             sx={{ padding: "8px 6px" }}
                                             onClick={() => {
-                                                handleClickUpdate(item._id);
+                                                handleClickUpdate(item.id);
                                             }}
                                         >
                                             <Edit sx={{ fontSize: "22px" }} />
@@ -280,9 +281,9 @@ function EmployeeManagement() {
                                             size="medium"
                                             color="error"
                                             onClick={() => {
-                                                console.log(item._id);
+                                                console.log(item.id);
                                                 setOpenDeleteModal(true);
-                                                setId(item._id);
+                                                setId(item.id);
                                             }}
                                         >
                                             <DeleteOutline
