@@ -4,23 +4,44 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Stack, Pagination } from "@mui/material";
 import NewsSidebar from "./components/NewsSidebar";
-import HandleNewsApi from "../../Apis/HandleNewsApi";
+import axios from "axios";
 
 function News() {
   const [dataLength, setDataLength] = useState();
-  const [data, setData] = useState(null);
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    HandleNewsApi.getNewsByPageIndex(page - 1).then((res) => {
-      setData(res.news);
-      setDataLength(res.totalNews);
-    });
-  }, [page]);
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (e, p) => {
-    setPage(p);
+    setCurrentPage(p);
   };
+  const trimContent = (content) => {
+    if (content.length > 250) {
+      return content.substring(0, 250) + "...";
+    }
+    return content;
+  };
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${day}/${month}/${year}`;
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/v1/news?page=${currentPage}&size=6`
+        );
+        const jsonData = await response.json();
+        setData(jsonData);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [currentPage]);
 
   return (
     <div className={styles.container}>
@@ -28,19 +49,18 @@ function News() {
       <div className={styles.newsSection}>
         <section className={styles.section}>
           <div>
-
-            {data?.map((news, index) => {
+            {data.map((news) => {
               return (
                 <Link
-                  to={`/readnews/${news._id}`}
-                  key={index}
+                  to={`/readnews/${news.id}`}
+                  key={news.id}
                   className={styles.link}
                 >
                   <Card
                     image={news.image}
                     title={news.title}
-                    date={news.dateSource}
-                    description={news.description}
+                    date={formatDate(news.date)}
+                    description={trimContent(news.content)}
                   />
                 </Link>
               );
@@ -51,7 +71,7 @@ function News() {
               <Pagination
                 size="large"
                 color="primary"
-                count={Math.ceil(dataLength / 5)}
+                count={Math.ceil(100 / 5)}
                 showFirstButton
                 showLastButton
                 sx={{ margin: "32px 0 56px" }}
