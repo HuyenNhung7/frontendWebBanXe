@@ -21,7 +21,7 @@ const Search = () => {
   console.log(test); 
   const sendRequest = async(number=currentPage)=>{
     const res = await axios
-    .get(`http://localhost:8080/api/v1/xe/find?ten=${test}&thuongHieu=${test}&page=${number}&size=${postPerPage}`)
+    .get(`http://localhost:8080/api/v1/xe?ten=${test}&thuongHieu=${test}&page=${number}&size=${postPerPage}`)
     .catch((err)=>console.log(err))
     setLoading(false);
     const data = await res.data;

@@ -24,9 +24,12 @@ const Menu = ({ item }) => {
          <div style={{ position:'relative'}}  > 
             <NavLink role="button"
            className={classes.item}           
-           onClick={()=>setDropdown((prev)=>!prev)}
+           onMouseEnter={()=>setDropdown(true)}
+           onMouseLeave={()=>setDropdown(false)}
            end>{item.title}</NavLink>
-            <div onClick={()=>setDropdown((prev)=>!prev)}>
+            <div onClick={()=>setDropdown(false)}
+                 onMouseEnter={()=>setDropdown(true)}
+                 onMouseLeave={()=>setDropdown(false)}>
             <Dropdown 
             dropdownstate={dropdown} submenus={item.submenu}></Dropdown>
             </div>

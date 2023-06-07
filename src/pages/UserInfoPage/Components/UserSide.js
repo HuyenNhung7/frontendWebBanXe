@@ -24,7 +24,7 @@ const UserSide = () => {
   const [modal, setModal] = useState(false) 
   const [status, setStatus] = useState() 
   const authAxios = axios.create({
-    baseURL: 'http://localhost:9090/api/v1',
+    baseURL: 'http://localhost:8080/api/v1',
     headers:{
       Authorization:`Bearer ${token}`
     }

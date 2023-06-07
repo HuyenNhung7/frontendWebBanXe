@@ -57,7 +57,7 @@ const OrderSide = ({ setDetail }) => {
     };
     //useEffect(() => { setDidMount(true) }, [])
     const authAxios = axios.create({
-        baseURL: "http://localhost:9090/hduser/",
+        baseURL: "http://localhost:8080/hduser/",
         headers: {
             Authorization: `Bearer ${token}`,
         },

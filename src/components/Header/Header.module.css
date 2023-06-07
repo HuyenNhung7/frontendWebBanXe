@@ -17,14 +17,16 @@ input {
 .icons {
   color: rgb(0, 0, 0);
   position: absolute;
-  left: 14%;
-  top: 5px;
+  left: 13%;
+  top: 10px;
 }
 .wrapper {
   text-align: center;
   position: relative;
-  width: 250px;
+  width: 300px;
+  height: 40px;
 }
+
 .groupicon a {
   padding: 10px;
 }
@@ -42,6 +44,7 @@ input {
   width: 100%;
   padding: 0;
   position: relative;
+  margin-left: 30px;
 }
 .header .menu {
   display: inline-block;
@@ -60,15 +63,18 @@ input {
 .header input {
   background-color: #ffffff;
   border-radius: 10px;
-  height: 32px;
+  height: 40px;
   width: 300px;
-  margin: 0 20px;
+  margin: 5px 20px;
   font-style: italic;
   color: #777777;
+  font-size: 16px;
   outline: none;
+  padding-left: 35px;
 }
 .header input::placeholder {
   color: #cdcaca;
+  font-size: 16px;
 }
 .header img {
   width: 100px;

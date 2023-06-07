@@ -16,7 +16,7 @@ const AutoComplete = () => {
 
     const sendRequest = async(query)=>{
       const res = await axios
-      .get(`http://localhost:8080/api/v1/xe/find?ten=${query}&thuongHieu=${query}&page=${0}&size=${5}`)
+      .get(`http://localhost:8080/api/v1/xe?ten=${query}&page=${0}&size=${5}`)
       .catch((err)=>console.log(err))
       const data = await res.data.data;
       // await HandleApiXe.getXeByNameOrBranch(0, test, test).then(async (res) => {
@@ -107,7 +107,7 @@ const handleKeyDown = (event) => {
        onKeyDown={handleKeyDown}
     ></input>     
     {suggestionsActive && <Suggestions />}
-    <SearchRoundedIcon fontSize="large" className={classes.icons}/>
+    <SearchRoundedIcon sx={{fontSize: 28}} className={classes.icons}/>
     </div>
   );
 };

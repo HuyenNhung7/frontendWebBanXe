@@ -1,0 +1,62 @@
+.filterContainer {
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 4px 4px 4px #ccc;
+    margin: 50px 160px 0;
+}
+
+.filterTitle {
+    color: #8a0000;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 15px;
+}
+
+.filterRow {
+    display: flex;
+    margin: 15px 0;
+}
+
+.filterLabel {
+    font-size: 16px;
+    font-weight: 700;
+    width: 15%;
+    margin: auto 0;
+}
+
+.listSelect {
+    display: inline-block;
+    font-size: 16px;
+    padding: 7px 13px;
+    background-color: #eee; 
+    box-shadow: 1px 1px 1px #ddd;
+    margin-right: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.listSelectActive {
+    display: inline-block;
+    font-size: 16px;
+    padding: 7px 13px;
+    background-color: #ccc; 
+    box-shadow: 1px 1px 1px #ddd;
+    margin-right: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.listSelect:hover {
+    background-color: #ccc;
+}
+
+.filterSubmitBtn {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    background-color: #8a0000;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
