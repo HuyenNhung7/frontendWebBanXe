@@ -75,7 +75,7 @@ const Login = () => {
     };
     const sendRequestSU = async () => {
         const res = await axios
-            .post(`http://localhost:9090/api/v1/user/login`, {
+            .post(`http://localhost:8080/api/v1/user/login`, {
                 email: String(inputs.email),
                 password: String(inputs.password),
             })

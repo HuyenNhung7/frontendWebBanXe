@@ -6,7 +6,7 @@ function StaffRoute({ children }) {
 
     return (
         <div>
-            {(user.role === "admin") ? children : <Navigate to="/dashboard" />}
+            {(user.role === "AD") ? children : <Navigate to="/dashboard" />}
         </div>
     );
 }

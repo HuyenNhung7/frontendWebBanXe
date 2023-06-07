@@ -136,7 +136,7 @@ const Register = () => {
     */
       const sendRequestSU = async ()=>{
         const res = await axios
-        .post(`http://localhost:9090/api/v1/user/register`,{
+        .post(`http://localhost:8080/api/v1/user/register`,{
           username:String(inputs.name),
           email:String(inputs.email),
           password:String(inputs.password)

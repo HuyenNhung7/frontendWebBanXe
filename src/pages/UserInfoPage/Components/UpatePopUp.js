@@ -22,7 +22,7 @@ const UpatePopUp = (props) => {
   const [birth, setBirth] = useState(props.data.ngaysinh)
   const [date, setDate] = useState(dayjs(props.data.ngaysinh,"DD:MM:YYYY"))
   const authAxios = axios.create({
-    baseURL: 'http://localhost:9090/api/v1/user',
+    baseURL: 'http://localhost:8080/api/v1/user',
     headers:{
       Authorization:`Bearer ${token}`
     }

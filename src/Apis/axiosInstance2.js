@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance2 = axios.create({
-    baseURL: "http://localhost:9090/",
+    baseURL: "http://localhost:8080/",
     // baseURL: process.env.REACT_APP_BASE_URL,
     // headers: {
     //     Authorization: `Bearer ${token}`,

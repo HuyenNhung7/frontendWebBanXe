@@ -19,7 +19,7 @@ const DetailOrder = ({item}) => {
         1,2,3,4,2
     ]
     const authAxios = axios.create({
-        baseURL: 'http://localhost:9090/hd',
+        baseURL: 'http://localhost:8080/hd',
         headers:{
           Authorization:`Bearer ${token}`
         }
@@ -35,7 +35,7 @@ const DetailOrder = ({item}) => {
       }
       const getCar = async(macar)=>{
         const res = await axios
-        .get(`http://localhost:9090/api/v1/xe/${macar}`)
+        .get(`http://localhost:8080/api/v1/xe/${macar}`)
         .catch((err)=>console.log(err))
         const data = await res.data;
         await console.log( data);

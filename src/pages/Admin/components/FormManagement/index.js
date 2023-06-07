@@ -235,7 +235,7 @@ function FormManagement() {
                                         onClick={() => handleReadInfo(item._id)}
                                     >
                                         {item.message
-                                            ? item.message.slice(0, 30)
+                                            ? item.message
                                             : ""}
                                     </Item>
                                 </Grid>
