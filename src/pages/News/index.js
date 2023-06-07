@@ -80,7 +80,7 @@ function News() {
             </Stack>
           </div>
         </section>
-        <div class={styles.divider}></div>
+        <div className={styles.divider}></div>
         <NewsSidebar />
       </div>
     </div>

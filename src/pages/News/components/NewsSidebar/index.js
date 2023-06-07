@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function NewsSidebar() {
-  const [allData, setAllData] = useState();
+  const [allData, setAllData] = useState([]);
   const fetchData = async () => {
     try {
       const response = await fetch(
