@@ -38,6 +38,8 @@ function AdminSidebar() {
     const StaffFunc = [
         "Quản lý ô tô",
         "Quản lý khách hàng",
+        "Quản lý nhân viên",
+        "Quản lý tin tức",
         "Quản lý form",
         "Quản lý hóa đơn",
     ];
@@ -94,7 +96,7 @@ function AdminSidebar() {
                 </div>
             </div>
             <ul className={styles.sidebar_content}>
-                {user.role === "admin" || true
+                {user.role === "AD" || true
                     ? AdminFunc.map((func, index) => (
                           <li className={styles.sidebar_item} key={index}>
                               <NavLink
