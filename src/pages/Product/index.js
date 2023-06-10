@@ -62,11 +62,11 @@ useEffect (() => {
     km = true
   }
 
-  console.log(filterData[0].khuyenMai)
+  console.log(filterData[0]?.khuyenMai)
   result = filterData.filter((item)=> (yearFilter === "Tất cả" || item.namSanXuat === parseInt(yearFilter))
                                         && (seatsFilter === "Tất cả" || item.soCho ===  parseInt(seatsFilter))
                                         && (priceFilter === "Tất cả" || (item.giaXe >= min &&  (max === 0 || item.giaXe < max)))
-                                        && (promotionFilter === "Tất cả" || (!km?item.khuyenMai===null:item.khuyenMai!==null)))
+                                        && (promotionFilter === "Tất cả" || (!km?item?.khuyenMai===null:item?.khuyenMai!==null)))
   setData(result);
 }, [priceFilter, yearFilter, seatsFilter, promotionFilter])
   

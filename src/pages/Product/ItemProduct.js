@@ -5,7 +5,7 @@ function ItemProduct({data}){
         <>
             <div className={styles.listProducts}>
                 <div className={styles.itemProduct}>
-                {data.khuyenMai && <div className={styles.tagKhuyenMai}>{data.khuyenMai.ten}</div>}
+                {data.khuyenMai && <div className={styles.tagKhuyenMai}>{data.khuyenMai?.ten}</div>}
                     <h3 className={styles.itemProduct__Title}>{data.ten}</h3>
                     <p className={styles.itemProduct__Price}>{"Giá: "+ data.giaXe + " VNĐ"}</p>
                     <img className={styles.productImg}
