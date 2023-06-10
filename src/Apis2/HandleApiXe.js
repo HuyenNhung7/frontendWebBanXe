@@ -25,7 +25,7 @@ const getXeByPageIndex = async (pageIndex) => {
 };
 
 const getXeByBranch = async (pageIndex = 0, branch) => {
-    return await axiosInstance.get(`/xe?thuongHieu=${branch}&page=${pageIndex}&size=${5}`);
+    return await axiosInstance.get(`/xe?thuongHieu=${branch}&page=${pageIndex}&size=${6}`);
 };
 
 const getXeByNameOrBranch = async (pageIndex = 0, branch, ten) => {

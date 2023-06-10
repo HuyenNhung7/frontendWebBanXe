@@ -11,7 +11,7 @@ function Product() {
   const { carBrand } = useParams();
   const [filterData, setFilterData] = useState([])
   const [yearFilter, setYearFilter] = useState("Tất cả")
-  const [colorFilter, setColorFilter] = useState()
+  const [promotionFilter, setPromotionFilter] = useState()
   const [priceFilter, setPriceFilter] = useState("Tất cả")
   const [seatsFilter, setSeatsFilter] = useState("Tất cả")
   
@@ -31,6 +31,7 @@ console.log(carBrand);
 useEffect (() => {
   let result = []
   let min, max
+  let km = false
 
   if(priceFilter === "Dưới 300 tr"){
     min = 0
@@ -57,20 +58,28 @@ useEffect (() => {
     max = 0
   } 
 
+  if(promotionFilter === "Có khuyến mãi") {
+    km = true
+  }
+
+  console.log(filterData[0].khuyenMai)
   result = filterData.filter((item)=> (yearFilter === "Tất cả" || item.namSanXuat === parseInt(yearFilter))
                                         && (seatsFilter === "Tất cả" || item.soCho ===  parseInt(seatsFilter))
-                                        && (priceFilter === "Tất cả" || (item.giaXe >= min &&  (max === 0 || item.giaXe < max))))
+                                        && (priceFilter === "Tất cả" || (item.giaXe >= min &&  (max === 0 || item.giaXe < max)))
+                                        && (promotionFilter === "Tất cả" || (!km?item.khuyenMai===null:item.khuyenMai!==null)))
   setData(result);
-}, [priceFilter, yearFilter, seatsFilter])
+}, [priceFilter, yearFilter, seatsFilter, promotionFilter])
   
     return ( <div>
       <div className={styles.productContainer} >
       <ProductFilter setYearFilter={setYearFilter}
                      setSeatsFilter={setSeatsFilter}
                      setPriceFilter={setPriceFilter}
+                     setPromotionFilter={setPromotionFilter}
                      yearFilter={yearFilter}
                      seatsFilter={seatsFilter}
-                     priceFilter={priceFilter}/>
+                     priceFilter={priceFilter}
+                     promotionFilter={promotionFilter}/>
         <h1 className={styles.nameType}>{carBrand.toUpperCase()}</h1>
         <div className={styles.containerLayout}>
               {data.map((item, index) => (

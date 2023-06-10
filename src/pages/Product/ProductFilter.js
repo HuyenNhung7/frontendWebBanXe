@@ -3,13 +3,16 @@ function ProductFilter ({
     setYearFilter,
     setSeatsFilter,
     setPriceFilter,
+    setPromotionFilter,
     yearFilter,
     seatsFilter,
-    priceFilter
+    priceFilter,
+    promotionFilter
 }) {
     const lstYear = ["Tất cả","2023","2022","2021","2020","2019","2018","2017", "2016", "2015"]
     const lstSeats = ["Tất cả","2","4","5","6","7"]
     const lstPrice = ["Tất cả","Dưới 300 tr","300 - 500 tr","500 - 700 tr","700 - 1 tỷ","1 tỷ - 2 tỷ","trên 2 tỷ"]
+    const lstPromotion = ["Tất cả", "Có khuyến mãi", "Không có khuyến mãi"]
 
     return (
         <div className={classes.filterContainer}>
@@ -48,6 +51,18 @@ function ProductFilter ({
                         lstPrice.map((price, index)=>{
                             return <li onClick={()=>setPriceFilter(price)} 
                             className={price === priceFilter? classes.listSelectActive : classes.listSelect}>{price}</li>
+                        })
+                    }
+                </ul>
+            </div>
+
+            <div className={classes.filterRow}>
+                <span className={classes.filterLabel}>Khuyến mãi:</span>
+                <ul>
+                    {
+                        lstPromotion.map((promotion, index)=>{
+                            return <li onClick={()=>setPromotionFilter(promotion)} 
+                            className={promotion === promotionFilter? classes.listSelectActive : classes.listSelect}>{promotion}</li>
                         })
                     }
                 </ul>

@@ -11,7 +11,7 @@ function ItemCar({ data }) {
         if(data.khuyenMai) {
             setTenKM(data.khuyenMai.ten)
         }
-},[])
+    },[])
     return (
         <div className={style.carContainer}>
             {tenKM && <div className={style.tagKhuyenMai}>{tenKM}</div>}
