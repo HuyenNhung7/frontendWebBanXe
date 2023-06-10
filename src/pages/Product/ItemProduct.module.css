@@ -1,11 +1,29 @@
 .listProducts {
   background-color: white;
+  padding-top: 40px;
+  margin-top: 30px;
+  border-radius: 5px;
+  box-shadow: 4px 4px 4px #ccc;
 }
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.tagKhuyenMai {
+  position: absolute;
+  right: 0;
+  top: -25px;
+  color: white;
+  font-size: 1.6rem;
+  height: 30px;
+  min-width: 100px;
+  background-color: rgba(105, 10, 10, 1);
+  box-shadow: 2px 2px 2px rgba(105, 10, 10, 0.7);
+  padding: auto;
+}
+
 .productImg {
   position: relative;
   width: 300px;
@@ -24,6 +42,7 @@
 .itemProduct {
   width: 340px;
   height: 355px;
+  position: relative;
 }
 
 .itemProduct__Title {

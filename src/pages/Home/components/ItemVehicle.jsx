@@ -3,6 +3,7 @@ import {Link } from 'react-router-dom'
 function ItemVehicle({data}) {
     return(
         <div className={style.itemCarContainer}>
+            {data.khuyenMai && <div className={style.tagKhuyenMai}>{data.khuyenMai.ten}</div>}
             <p className={style.carName}>{data.ten}</p>
             <p className={style.carInfo}>{data.giaXe + " VNĐ"}</p>
             <img src={data.hinhAnh} alt="BMW car" width={300} height={170}/>
