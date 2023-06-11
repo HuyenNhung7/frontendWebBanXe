@@ -4,7 +4,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useLayoutEffect } from "react";
 import NewsSidebar from "../News/components/NewsSidebar";
-import axios from "axios";
+import { getNewsById, formatDate } from "../../Apis2/HandleApiNews";
 
 // scroll to top when navigate
 const Wrapper = ({ children }) => {
@@ -15,33 +15,14 @@ const Wrapper = ({ children }) => {
   return children;
 };
 
-  const formatDate = (date) => {
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${day}/${month}/${year}`;
-  }
-
-
 function ReadNews() {
   const [news, setNews] = useState(null);
   const { id } = useParams();
 
 // create an axios instance with the base url
-const api = axios.create({
-  baseURL: "http://localhost:8080/api/v1"
+getNewsById(id).then(res => {
+  setNews(res.data);	
 });
-
-  api.get(`/news/${id}`) // this will fetch http://localhost:8080/api/v1/news/1 if the url is /news/1
-    .then(response => {
-	    setNews(response.data);
-    })
-    .catch(error => {
-      // handle the error
-	    console.log(error);
-    });
-
   return (
     <Wrapper>
       <div className={styles.container}>
