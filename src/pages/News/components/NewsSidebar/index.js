@@ -10,6 +10,8 @@ export default function NewsSidebar() {
   useEffect(() => {
     getNews(8).then((res) => {
       setAllData(res.data);
+    }).catch((err) => {
+	console.log(err);	    
     });
   }, []);
   return (

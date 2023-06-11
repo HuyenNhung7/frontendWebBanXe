@@ -22,6 +22,8 @@ function ReadNews() {
 // create an axios instance with the base url
 getNewsById(id).then(res => {
   setNews(res.data);	
+}).catch(err => {
+console.log(err);	
 });
   return (
     <Wrapper>

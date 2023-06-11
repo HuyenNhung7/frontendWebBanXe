@@ -1,4 +1,5 @@
 import style from "./Introduce.module.css"
+import AskBot from "../../components/AskBot/AskBot";
 
 function Introduce() {
     return ( 
@@ -62,6 +63,7 @@ function Introduce() {
                     <img alt="Hình ảnh nhân viên trong showroom" src="https://firebasestorage.googleapis.com/v0/b/kingspeed-1ee63.appspot.com/o/Introduction%2Femoloyee1.jpg?alt=media&token=41f611c4-bb89-4bb9-bd0f-f8338792c97f"/>
                     <img alt="Hình ảnh nhân viên giới thiệu xe cho khách" src="https://firebasestorage.googleapis.com/v0/b/kingspeed-1ee63.appspot.com/o/Introduction%2Fsalecar2.jpg?alt=media&token=0fb8bf7f-976f-4c6f-85f7-7fcd8fec8422"/>
                 </div>    
+	    <AskBot context={"introduce"} />
             </div>
         </div>
      );

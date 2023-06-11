@@ -21,6 +21,8 @@ function News() {
   };
   getNews(currentPage).then((res) => {
     setData(res.data);
+  }).catch(err => {
+    console.log(err);	  
   });
 
   return (
