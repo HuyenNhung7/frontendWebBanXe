@@ -1,7 +1,7 @@
 import axiosInstance from "./axiosInstanceNoToken";
 
 const askQuestion = async (question, context) => {
-  return await axiosInstance.post(`/ask/sample`,{
+  return await axiosInstance.post(`/ask/bard`,{
     question: question,
     context: context
   });
