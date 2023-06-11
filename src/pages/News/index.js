@@ -4,10 +4,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Stack, Pagination } from "@mui/material";
 import NewsSidebar from "./components/NewsSidebar";
-import axios from "axios";
+import { getNews, formatDate } from "../../Apis2/HandleApiNews";
 
 function News() {
-  const [dataLength, setDataLength] = useState();
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -20,28 +19,11 @@ function News() {
     }
     return content;
   };
-  const formatDate = (date) => {
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${day}/${month}/${year}`;
-  }
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/v1/news?page=${currentPage}&size=6`
-        );
-        const jsonData = await response.json();
-        setData(jsonData);
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [currentPage]);
+  getNews(currentPage).then((res) => {
+    setData(res.data);
+  }).catch(err => {
+    console.log(err);	  
+  });
 
   return (
     <div className={styles.container}>
